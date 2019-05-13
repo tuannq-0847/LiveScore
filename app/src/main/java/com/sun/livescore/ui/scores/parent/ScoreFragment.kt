@@ -35,9 +35,7 @@ class ScoreFragment : BaseFragment(), OnTabSelectedListener {
 
     private fun setUpViewPager() {
         val pagerAdapter = context?.let { context ->
-            activity?.supportFragmentManager?.let {
-                ScoreFragmentPagerAdapter(it, context, dates)
-            }
+            ScoreFragmentPagerAdapter(childFragmentManager, context, dates)
         }
         viewPagerScores.adapter = pagerAdapter
         setUpTabLayout(pagerAdapter)

@@ -9,6 +9,7 @@
     <color name="color_background">#212221</color>
     <color name="color_league_background">#313331</color>
     <color name="color_white">#FFFFFF</color>
+    <color name="color_title">#444345</color>
     <color name="color_gray">#313331</color>
     <color name="color_light_gray">#CCCCCC</color>
 </resources>
