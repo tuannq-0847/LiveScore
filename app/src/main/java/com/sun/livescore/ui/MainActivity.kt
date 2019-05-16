@@ -16,14 +16,14 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        defaultScoresFragment()
+        openScoresFragment()
     }
 
     override fun initComponents() {
         bottomMain.setOnNavigationItemSelectedListener(this)
     }
 
-    private fun defaultScoresFragment() {
+    private fun openScoresFragment() {
         supportFragmentManager
             .beginTransaction().add(R.id.layoutParent, ScoreFragment())
             .commit()
@@ -32,10 +32,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuScores -> {
-                val scoreFragment = ScoreFragment()
-                supportFragmentManager
-                    .beginTransaction().replace(R.id.layoutParent, scoreFragment)
-                    .commit()
+                openScoresFragment()
             }
         }
         return true

@@ -1,6 +1,8 @@
 package com.sun.livescore.util
 
 object Util {
+    /*function này em viết để có thể tách được tỉ số của độ nhà và đội khách ra ạ. Vì json từ api nó trả về kiểu
+    như thế này ạ vd: 0-1*/
     fun getScoreFromString(scores: String?): Array<String> {
         scores?.let {
             for (i in 0 until it.length) {
@@ -15,6 +17,11 @@ object Util {
         }
         return arrayOf()
     }
+
+    /**
+     * function này em viết để có thể lấy ra thời gian diễn ra trận đấu giờ+phút ạ vì api nó trả về
+     * như thế này ạ vd: 12:30:00
+     */
 
     fun cleanUpTimeString(time: String): String {
         var finalTime = ""
