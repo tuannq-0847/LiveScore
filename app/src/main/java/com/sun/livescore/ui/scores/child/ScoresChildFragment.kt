@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_scores_child.recyclerScores
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ScoresChildFragment : BaseFragment() {
-    private var model: SharedViewModel? = null
+    private var sharedViewModel: SharedViewModel? = null
     private val scoreChildViewModel: ScoreChildViewModel by viewModel()
     override val layoutId: Int
         get() = R.layout.fragment_scores_child
@@ -32,43 +32,52 @@ class ScoresChildFragment : BaseFragment() {
     }
 
     override fun initComponents() {
-        model = activity?.run {
+        sharedViewModel = activity?.run {
             ViewModelProviders.of(this).get(SharedViewModel::class.java)
         } ?: throw Exception()
-        model?.dateLiveData?.observe(this, ScoreObserver())
+        sharedViewModel?.dateLiveData?.observe(this, ScoreObserver())
         scoreChildViewModel.scoreHistoryLiveData.observe(this, Observer { apiResponse ->
             handleResponse(apiResponse)
         })
-        model?.dateLiveData?.observe(this, ScoreObserver())
         scoreChildViewModel.scoreFixtureLiveData.observe(this, Observer { apiResponse ->
             handleResponse(apiResponse)
         })
     }
 
-    private fun handleResponse(apiResponse: Any?) {
-        if (apiResponse is ApiResponse<*>) {
-            when (apiResponse.status) {
-                LOADING -> showLoading(true)
-                ERROR -> showError(apiResponse.message)
-                SUCCESS -> showSuccess(apiResponse.data)
-            }
+    private fun handleResponse(apiResponse: ApiResponse<*>) {
+        when (apiResponse.status) {
+            LOADING -> showLoading(true)
+            ERROR -> showError(apiResponse.message)
+            SUCCESS -> showSuccess(apiResponse.data)
         }
     }
 
     private fun showSuccess(data: Any?) {
         showLoading(false)
         data?.let {
-            if (data is FixtureResponse) {
-                loadDataToView(it)
+            handleData(it)
+        }
+    }
+
+    private fun handleData(data: Any) {
+        when (data) {
+            is HistoryResponse -> {
+                loadHistoryToView(data)
             }
-            if (data is HistoryResponse) {
-                loadDataToView(it)
+            is FixtureResponse -> {
+                loadFixtureToView(data)
             }
         }
     }
 
-    fun loadDataToView(data: Any) {
-        val adapter = ScoreAdapter(data)
+    private fun loadHistoryToView(data: HistoryResponse) {
+        val adapter = ScoreHistoryAdapter(data)
+        recyclerScores.layoutManager = LinearLayoutManager(context)
+        recyclerScores.adapter = adapter
+    }
+
+    private fun loadFixtureToView(data: FixtureResponse) {
+        val adapter = ScoreFixtureAdapter(data)
         recyclerScores.layoutManager = LinearLayoutManager(context)
         recyclerScores.adapter = adapter
     }

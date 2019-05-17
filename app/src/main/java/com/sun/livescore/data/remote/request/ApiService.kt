@@ -9,15 +9,11 @@ import retrofit2.http.Query
 interface ApiService {
     @GET(API_GET_FIXTURES)
     fun getScoresFixtures(
-        @Query(KEY) key: String,
-        @Query(SECRET) secret: String,
         @Query(DATE) date: String
     ): Single<FixtureResponse>
 
     @GET(API_GET_HISTORY)
     fun getScoresHistory(
-        @Query(KEY) key: String,
-        @Query(SECRET) secret: String,
         @Query(FROM) from: String,
         @Query(TO) to: String
     ): Single<HistoryResponse>

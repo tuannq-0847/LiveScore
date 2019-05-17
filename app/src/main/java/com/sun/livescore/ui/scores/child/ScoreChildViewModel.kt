@@ -3,7 +3,6 @@ package com.sun.livescore.ui.scores.child
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sun.livescore.BuildConfig
 import com.sun.livescore.data.model.score.fixture.FixtureResponse
 import com.sun.livescore.data.model.score.history.HistoryResponse
 import com.sun.livescore.data.remote.response.ApiResponse
@@ -27,34 +26,42 @@ class ScoreChildViewModel(private val repository: ScoreRepository) : ViewModel()
     fun getScores(date: String) {
         val finalDate = getFinalDate(date, getCurrentDate())
         if (checkDate(date, getCurrentDate())) {
-            compositeDisposable.add(
-                repository.getScoresFixtures(BuildConfig.API_KEY, BuildConfig.SECRET_KEY, finalDate)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe {
-                        _scoreFixtureLiveData.value = ApiResponse.loading()
-                    }
-                    .subscribe({
-                        _scoreFixtureLiveData.value = ApiResponse.success(it)
-                    }, {
-                        _scoreFixtureLiveData.value = ApiResponse.error(it.message.toString())
-                    })
-            )
+            getScoreFixtures(finalDate)
         } else {
-            compositeDisposable.add(
-                repository.getScoresHistory(BuildConfig.API_KEY, BuildConfig.SECRET_KEY, finalDate, finalDate)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe {
-                        _scoreHistoryLiveData.value = ApiResponse.loading()
-                    }
-                    .subscribe({
-                        _scoreHistoryLiveData.value = ApiResponse.success(it)
-                    }, {
-                        _scoreHistoryLiveData.value = ApiResponse.error(it.message.toString())
-                    })
-            )
+            getScoreHistories(finalDate)
         }
+    }
+
+    private fun getScoreFixtures(finalDate: String) {
+        compositeDisposable.add(
+            repository.getScoresFixtures(finalDate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    _scoreFixtureLiveData.value = ApiResponse.loading()
+                }
+                .subscribe({
+                    _scoreFixtureLiveData.value = ApiResponse.success(it)
+                }, {
+                    _scoreFixtureLiveData.value = ApiResponse.error(it.message.toString())
+                })
+        )
+    }
+
+    private fun getScoreHistories(finalDate: String) {
+        compositeDisposable.add(
+            repository.getScoresHistory(finalDate, finalDate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    _scoreHistoryLiveData.value = ApiResponse.loading()
+                }
+                .subscribe({
+                    _scoreHistoryLiveData.value = ApiResponse.success(it)
+                }, {
+                    _scoreHistoryLiveData.value = ApiResponse.error(it.message.toString())
+                })
+        )
     }
 
     private fun getCurrentDate(): String {

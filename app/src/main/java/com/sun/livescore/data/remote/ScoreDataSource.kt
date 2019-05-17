@@ -10,12 +10,7 @@ import io.reactivex.Single
 
 interface ScoreDataSource {
     interface Remote {
-        fun getScoresFixtures(key: String, secret: String, date: String): Single<FixtureResponse>
-        fun getScoresHistory(
-            key: String,
-            secret: String,
-            from: String,
-            to: String
-        ): Single<HistoryResponse>
+        fun getScoresFixtures(date: String): Single<FixtureResponse>
+        fun getScoresHistory(from: String, to: String): Single<HistoryResponse>
     }
 }

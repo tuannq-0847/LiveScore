@@ -30,6 +30,10 @@ class ScoreFragment : BaseFragment(), OnTabSelectedListener {
         model = activity?.run {
             ViewModelProviders.of(this).get(SharedViewModel::class.java)
         } ?: throw Exception()
+        setUpViewPager()
+    }
+
+    private fun setUpViewPager() {
         val pagerAdapter =
             context?.let { context ->
                 activity?.supportFragmentManager?.let {
@@ -40,6 +44,10 @@ class ScoreFragment : BaseFragment(), OnTabSelectedListener {
                 }
             }
         viewPagerScores.adapter = pagerAdapter
+        setUpTabLayout(pagerAdapter)
+    }
+
+    private fun setUpTabLayout(pagerAdapter: ScoreFragmentPagerAdapter?) {
         tabLayout.addOnTabSelectedListener(this)
         tabLayout.setupWithViewPager(viewPagerScores)
         for (i in 0 until tabLayout.tabCount) {
