@@ -2,21 +2,22 @@ package com.sun.livescore.data.model.score.fixture
 
 import com.google.gson.annotations.SerializedName
 
-open class ScoreFixture {
+open class Fixture(
     @SerializedName(ID)
-    var id: String? = null
+    var id: String? = null,
     @SerializedName(DATE)
-    var date: String? = null
+    var date: String? = null,
     @SerializedName(HOME_NAME)
-    var homeTeamName: String? = null
+    var homeTeamName: String? = null,
     @SerializedName(AWAY_NAME)
-    var awayTeamName: String? = null
+    var awayTeamName: String? = null,
     @SerializedName(TIME)
-    var time: String? = null
+    var time: String? = null,
     @SerializedName(LOCATION)
-    var location: String? = null
+    var location: String? = null,
     @SerializedName(LEAGUE_ID)
     var leagueId: String? = null
+) {
 
     companion object {
         const val DATE = "date"

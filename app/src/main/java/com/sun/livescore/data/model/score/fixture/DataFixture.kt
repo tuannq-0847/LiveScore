@@ -2,13 +2,14 @@ package com.sun.livescore.data.model.score.fixture
 
 import com.google.gson.annotations.SerializedName
 
-data class ScoreChildFixture(
+open class DataFixture(
     @SerializedName(FIXTURES)
-    var scoreFixtures: List<ScoreFixture>,
+    var fixtures: List<Fixture>? = null,
     @SerializedName(NEXT_PAGE)
-    var nextPage: String,
+    var nextPage: String? = null,
     @SerializedName(PREV_PAGE)
-    var prevPage: String
+    var prevPage: String? = null
+
 ) {
 
     companion object {

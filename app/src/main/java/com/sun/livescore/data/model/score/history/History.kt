@@ -2,20 +2,20 @@ package com.sun.livescore.data.model.score.history
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.sun.livescore.data.model.score.fixture.ScoreFixture
+import com.sun.livescore.data.model.score.fixture.Fixture
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ScoreHistory(
+data class History(
     @SerializedName(SCORE)
-    var score: String,
+    var score: String? = null,
     @SerializedName(HT_SCORE)
-    var htScore: String,
+    var htScore: String? = null,
     @SerializedName(FT_SCORE)
-    var ftScore: String,
+    var ftScore: String? = null,
     @SerializedName(STATUS)
-    var status: String
-) : ScoreFixture(), Parcelable {
+    var status: String? = null
+) : Parcelable, Fixture() {
 
     companion object {
         const val SCORE = "score"
