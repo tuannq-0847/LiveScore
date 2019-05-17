@@ -8,20 +8,20 @@ import com.sun.livescore.ui.base.BaseRecyclerAdapter
 import com.sun.livescore.util.Constant
 import com.sun.livescore.util.Util
 
-class ScoreHistoryAdapter(private val historyResponse: HistoryResponse) :
-    BaseRecyclerAdapter<ItemMatchScoreBinding>(historyResponse) {
+class ScoreHistoryAdapter(histories: List<History>) :
+    BaseRecyclerAdapter<ItemMatchScoreBinding, History>(histories) {
 
     override fun getLayoutRes(viewType: Int): Int = R.layout.item_match_score
 
-    override fun bindViewHistory(binding: ItemMatchScoreBinding, histories: List<History>, position: Int) {
-        super.bindViewHistory(binding, histories, position)
+    override fun bindView(binding: ItemMatchScoreBinding, position: Int, score: History) {
+        super.bindView(binding, position, score)
         binding.run {
             isScore = false
-            scoreHistory = histories[position]
-            val scores = Util.getScoreFromString(histories[position].score)
+            scoreHistory = score
+            val scores = Util.getScoreFromString(score.score)
             scoreHomeTeam = scores[Constant.FIRST_SCORE_INDEX]
             scoreAwayTeam = scores[Constant.SECOND_SCORE_INDEX]
-            timeHistory = histories[position].time
+            timeHistory = score.time
         }
     }
 

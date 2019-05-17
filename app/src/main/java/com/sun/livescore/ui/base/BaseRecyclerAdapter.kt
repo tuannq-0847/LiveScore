@@ -12,21 +12,11 @@ import com.sun.livescore.data.model.score.history.History
 import com.sun.livescore.data.model.score.history.HistoryResponse
 import com.sun.livescore.ui.base.BaseRecyclerAdapter.BaseViewHolder
 
-abstract class BaseRecyclerAdapter<ViewBinding : ViewDataBinding>(private val baseScore: Any) :
+abstract class BaseRecyclerAdapter<ViewBinding : ViewDataBinding, T>(private val scores: List<T>) :
     RecyclerView.Adapter<BaseViewHolder<ViewBinding>>() {
 
     override fun getItemCount(): Int {
-        return when (baseScore) {
-            is HistoryResponse
-            -> baseScore.data?.histories?.size?.let {
-                it
-            }!!
-            is FixtureResponse
-            -> baseScore.data?.fixtures?.size?.let {
-                it
-            }!!
-            else -> 0
-        }
+        return scores.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<ViewBinding> {
@@ -42,23 +32,10 @@ abstract class BaseRecyclerAdapter<ViewBinding : ViewDataBinding>(private val ba
     protected abstract fun getLayoutRes(viewType: Int): Int
 
     override fun onBindViewHolder(holder: BaseViewHolder<ViewBinding>, position: Int) {
-        when (baseScore) {
-            is HistoryResponse
-            -> baseScore.data?.histories?.let {
-                bindViewHistory(holder.binding, it, position)
-            }
-            is FixtureResponse
-            -> baseScore.data?.fixtures?.let {
-                bindViewFixture(holder.binding, it, position)
-            }
-
-        }
+        bindView(holder.binding, position, scores[position])
     }
 
-    protected open fun bindViewFixture(binding: ViewBinding, fixtures: List<Fixture>, position: Int) {
-    }
-
-    protected open fun bindViewHistory(binding: ViewBinding, histories: List<History>, position: Int) {
+    protected open fun bindView(binding: ViewBinding, position: Int, score: T) {
     }
 
     open class BaseViewHolder<ViewBinding : ViewDataBinding>(val binding: ViewBinding) :

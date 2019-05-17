@@ -2,24 +2,23 @@ package com.sun.livescore.ui.scores.child
 
 import com.sun.livescore.R
 import com.sun.livescore.data.model.score.fixture.Fixture
-import com.sun.livescore.data.model.score.fixture.FixtureResponse
 import com.sun.livescore.databinding.ItemMatchScoreBinding
 import com.sun.livescore.ui.base.BaseRecyclerAdapter
 import com.sun.livescore.util.Constant.FIRST_SCORE_INDEX
 
-class ScoreFixtureAdapter(fixtureResponse: FixtureResponse) :
-    BaseRecyclerAdapter<ItemMatchScoreBinding>(fixtureResponse) {
+class ScoreFixtureAdapter(fixtures: List<Fixture>) :
+    BaseRecyclerAdapter<ItemMatchScoreBinding, Fixture>(fixtures) {
 
     override fun getLayoutRes(viewType: Int): Int {
         return R.layout.item_match_score
     }
 
-    override fun bindViewFixture(binding: ItemMatchScoreBinding, fixtures: List<Fixture>, position: Int) {
-        super.bindViewFixture(binding, fixtures, position)
+    override fun bindView(binding: ItemMatchScoreBinding, position: Int, score: Fixture) {
+        super.bindView(binding, position, score)
         binding.run {
             isScore = true
-            scoreFixture = fixtures[position]
-            fixtures[position].time?.let { timeFixture = cleanUpTimeString(it) }
+            scoreFixture = score
+            score.time?.let { timeFixture = cleanUpTimeString(it) }
         }
     }
 

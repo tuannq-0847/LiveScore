@@ -71,15 +71,19 @@ class ScoresChildFragment : BaseFragment() {
     }
 
     private fun loadHistoryToView(data: HistoryResponse) {
-        val adapter = ScoreHistoryAdapter(data)
-        recyclerScores.layoutManager = LinearLayoutManager(context)
-        recyclerScores.adapter = adapter
+        data.data?.histories?.let {
+            val adapter = ScoreHistoryAdapter(it)
+            recyclerScores.layoutManager = LinearLayoutManager(context)
+            recyclerScores.adapter = adapter
+        }
     }
 
     private fun loadFixtureToView(data: FixtureResponse) {
-        val adapter = ScoreFixtureAdapter(data)
-        recyclerScores.layoutManager = LinearLayoutManager(context)
-        recyclerScores.adapter = adapter
+        data.data?.fixtures?.let {
+            val adapter = ScoreFixtureAdapter(it)
+            recyclerScores.layoutManager = LinearLayoutManager(context)
+            recyclerScores.adapter = adapter
+        }
     }
 
     private fun showError(message: String) {
