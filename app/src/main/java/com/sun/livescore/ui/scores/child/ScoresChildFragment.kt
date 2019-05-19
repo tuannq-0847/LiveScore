@@ -37,37 +37,35 @@ class ScoresChildFragment : BaseFragment() {
         } ?: throw Exception()
         sharedViewModel?.dateLiveData?.observe(this, ScoreObserver())
         scoreChildViewModel.scoreHistoryLiveData.observe(this, Observer { apiResponse ->
-            handleResponse(apiResponse)
+            handleHistoryResponse(apiResponse)
         })
         scoreChildViewModel.scoreFixtureLiveData.observe(this, Observer { apiResponse ->
-            handleResponse(apiResponse)
+            handleFixtureResponse(apiResponse)
         })
     }
 
-    private fun handleResponse(apiResponse: ApiResponse<*>) {
+    private fun handleHistoryResponse(apiResponse: ApiResponse<HistoryResponse>) {
         when (apiResponse.status) {
             LOADING -> showLoading(true)
             ERROR -> showError(apiResponse.message)
-            SUCCESS -> showSuccess(apiResponse.data)
+            SUCCESS -> displayHistory(apiResponse.data)
         }
     }
 
-    private fun showSuccess(data: Any?) {
-        showLoading(false)
-        data?.let {
-            handleData(it)
+    private fun handleFixtureResponse(apiResponse: ApiResponse<FixtureResponse>) {
+        when (apiResponse.status) {
+            LOADING -> showLoading(true)
+            ERROR -> showError(apiResponse.message)
+            SUCCESS -> displayFixture(apiResponse.data)
         }
     }
 
-    private fun handleData(data: Any) {
-        when (data) {
-            is HistoryResponse -> {
-                loadHistoryToView(data)
-            }
-            is FixtureResponse -> {
-                loadFixtureToView(data)
-            }
-        }
+    private fun displayHistory(data: HistoryResponse?) {
+        data?.let { loadHistoryToView(data) }
+    }
+
+    private fun displayFixture(data: FixtureResponse?) {
+        data?.let { loadFixtureToView(data) }
     }
 
     private fun loadHistoryToView(data: HistoryResponse) {

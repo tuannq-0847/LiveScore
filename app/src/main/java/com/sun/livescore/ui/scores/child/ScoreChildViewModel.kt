@@ -25,7 +25,7 @@ class ScoreChildViewModel(private val repository: ScoreRepository) : ViewModel()
 
     fun getScores(date: String) {
         val finalDate = getFinalDate(date, getCurrentDate())
-        if (checkDate(date, getCurrentDate())) {
+        if (compareDateToFetchData(date, getCurrentDate())) {
             getScoreFixtures(finalDate)
         } else {
             getScoreHistories(finalDate)
@@ -70,7 +70,7 @@ class ScoreChildViewModel(private val repository: ScoreRepository) : ViewModel()
         return simpleDateFormat.format(currentDateTime)
     }
 
-    fun getFinalDate(date: String, currentDate: String): String {
+    private fun getFinalDate(date: String, currentDate: String): String {
         val dateFormat = SimpleDateFormat(dateTimeFormatSyntax, Locale.US)
         val index = date.toInt() - currentDate.toInt()
         val calendar = Calendar.getInstance()
@@ -78,7 +78,7 @@ class ScoreChildViewModel(private val repository: ScoreRepository) : ViewModel()
         return dateFormat.format(calendar.time)
     }
 
-    private fun checkDate(date: String, currentDate: String): Boolean {
+    private fun compareDateToFetchData(date: String, currentDate: String): Boolean {
         return date.toInt() >= currentDate.toInt()
     }
 

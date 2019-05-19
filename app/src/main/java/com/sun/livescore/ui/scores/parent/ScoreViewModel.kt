@@ -8,16 +8,16 @@ import java.util.Locale
 
 class ScoreViewModel : BaseViewModel() {
 
-    fun handleDate(): List<DateTime> {
+    fun addDateToTabLayout(): List<DateTime> {
         val dateTimes = ArrayList<DateTime>()
         val indexes = mutableListOf(-3, -2, -1, 0, 1, 2, 3)
         for (i in 0 until indexes.size) {
-            dateTimes.add(getDateTime(indexes[i]))
+            dateTimes.add(getDateTimeForTabLayout(indexes[i]))
         }
         return dateTimes
     }
 
-    private fun getDateTime(index: Int): DateTime {
+    private fun getDateTimeForTabLayout(index: Int): DateTime {
         val calendars = Calendar.getInstance()
         calendars.add(Calendar.DAY_OF_YEAR, index)
         val calendar = calendars.time
@@ -25,7 +25,6 @@ class ScoreViewModel : BaseViewModel() {
         val dayFormat = SimpleDateFormat(dayFormatSyntax, Locale.US)
         val date = dateFormat.format(calendar)
         val day = dayFormat.format(calendar)
-
         return DateTime(day, date)
     }
 

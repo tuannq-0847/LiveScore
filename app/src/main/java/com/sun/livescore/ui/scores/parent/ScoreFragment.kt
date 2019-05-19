@@ -18,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ScoreFragment : BaseFragment(), OnTabSelectedListener {
     private val scoreViewModel: ScoreViewModel by viewModel()
     private var model: SharedViewModel? = null
-    private val dates: List<DateTime> by lazy { scoreViewModel.handleDate() }
+    private val dates: List<DateTime> by lazy { scoreViewModel.addDateToTabLayout() }
     override val layoutId: Int
         get() = R.layout.fragment_scores
 
@@ -34,15 +34,11 @@ class ScoreFragment : BaseFragment(), OnTabSelectedListener {
     }
 
     private fun setUpViewPager() {
-        val pagerAdapter =
-            context?.let { context ->
-                activity?.supportFragmentManager?.let {
-                    ScoreFragmentPagerAdapter(
-                        it,
-                        context, dates
-                    )
-                }
+        val pagerAdapter = context?.let { context ->
+            activity?.supportFragmentManager?.let {
+                ScoreFragmentPagerAdapter(it, context, dates)
             }
+        }
         viewPagerScores.adapter = pagerAdapter
         setUpTabLayout(pagerAdapter)
     }
