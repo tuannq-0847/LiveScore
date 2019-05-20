@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="leagueCountry"
+            type="com.sun.livescore.data.model.leagues.LeagueCountry" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_background"
+        android:paddingBottom="@dimen/dp_4"
+        android:paddingTop="@dimen/dp_8">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageEnsign"
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_25"
+            android:layout_marginStart="@dimen/dp_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textNameCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{leagueCountry.nameLeague}"
+            android:textColor="@color/color_white"
+            app:layout_constraintBottom_toBottomOf="@+id/imageEnsign"
+            app:layout_constraintLeft_toRightOf="@+id/imageEnsign"
+            app:layout_constraintTop_toTopOf="@id/imageEnsign" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:src="@drawable/ic_chevron_right_black_24dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_8"
+            android:background="@color/color_gray"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageEnsign" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

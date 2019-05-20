@@ -4,4 +4,5 @@
     <string name="live_title">Live</string>
     <string name="favorite_title">Favorite</string>
     <string name="league_title">League</string>
+    <string name="search_leagues">Search</string>
 </resources>
