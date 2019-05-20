@@ -2,22 +2,20 @@ package com.sun.livescore.ui.scores.child
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.sun.livescore.data.model.score.fixture.FixtureResponse
 import com.sun.livescore.data.model.score.history.HistoryResponse
 import com.sun.livescore.data.remote.response.ApiResponse
 import com.sun.livescore.data.repository.ScoreRepository
+import com.sun.livescore.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class ScoreChildViewModel(private val repository: ScoreRepository) : ViewModel() {
+class ScoreChildViewModel(private val repository: ScoreRepository) : BaseViewModel() {
     private val _scoreFixtureLiveData = MutableLiveData<ApiResponse<FixtureResponse>>()
     private val _scoreHistoryLiveData = MutableLiveData<ApiResponse<HistoryResponse>>()
-    private val compositeDisposable by lazy { CompositeDisposable() }
     val scoreFixtureLiveData: LiveData<ApiResponse<FixtureResponse>>
         get() = _scoreFixtureLiveData
     val scoreHistoryLiveData: LiveData<ApiResponse<HistoryResponse>>
