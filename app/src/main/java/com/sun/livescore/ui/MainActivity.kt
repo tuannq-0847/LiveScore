@@ -6,11 +6,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sun.livescore.R
 import com.sun.livescore.R.layout
 import com.sun.livescore.ui.base.BaseActivity
+import com.sun.livescore.ui.leagues.LeaguesFragment
 import com.sun.livescore.ui.scores.parent.ScoreFragment
 import kotlinx.android.synthetic.main.activity_main.bottomMain
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
-
     override val layoutId: Int
         get() = layout.activity_main
 
@@ -34,7 +34,16 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             R.id.menuScores -> {
                 openScoresFragment()
             }
+            R.id.menuLeague -> {
+                openLeaguesFragment()
+            }
         }
         return true
+    }
+
+    private fun openLeaguesFragment() {
+        supportFragmentManager
+            .beginTransaction().add(R.id.layoutParent, LeaguesFragment())
+            .commit()
     }
 }

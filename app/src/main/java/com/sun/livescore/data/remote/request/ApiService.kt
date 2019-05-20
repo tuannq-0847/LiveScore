@@ -1,5 +1,6 @@
 package com.sun.livescore.data.remote.request
 
+import com.sun.livescore.data.model.leagues.LeagueResponse
 import com.sun.livescore.data.model.score.fixture.FixtureResponse
 import com.sun.livescore.data.model.score.history.HistoryResponse
 import io.reactivex.Single
@@ -18,9 +19,14 @@ interface ApiService {
         @Query(TO) to: String
     ): Single<HistoryResponse>
 
+    @GET(API_GET_LEAGUES)
+    fun getLeagues(): Single<LeagueResponse>
+
     companion object {
+
         const val API_GET_FIXTURES = "api-client/fixtures/matches.json"
         const val API_GET_HISTORY = "api-client/scores/history.json"
+        const val API_GET_LEAGUES = "api-client/countries/list.json"
         const val KEY = "key"
         const val SECRET = "secret"
         const val DATE = "date"
