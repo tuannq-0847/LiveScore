@@ -16,7 +16,8 @@ class LeagueViewModel(private val repository: LeagueRepository) : BaseViewModel(
 
     fun getLeagues(country: String) {
         compositeDisposable.add(
-            repository.getLeagues(country).observeOn(AndroidSchedulers.mainThread())
+            repository.getLeagues(country)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe {
                     _leagueLiveData.value = ApiResponse.loading()

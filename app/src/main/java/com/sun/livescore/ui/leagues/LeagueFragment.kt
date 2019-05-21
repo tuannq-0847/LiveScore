@@ -41,17 +41,19 @@ class LeagueFragment : BaseFragment() {
     }
 
     private fun displayLeaguesToView(data: LeagueResponse?) {
-        val adapter = data?.data?.leagues?.let { LeagueAdapter(it) }
-        recyclerLeagues.adapter = adapter
-        recyclerLeagues.layoutManager = LinearLayoutManager(context)
+        data?.data?.leagues?.let {
+            val adapter = LeagueAdapter(it)
+            recyclerLeagues.adapter = adapter
+            recyclerLeagues.layoutManager = LinearLayoutManager(context)
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) progressLeagues.visibility = View.VISIBLE else progressLeagues.visibility = View.GONE
+        progressLeagues.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun splitLinkLeagues(url: String): String {
-        return url.split(REGEX)[1]
+        return url.split(REGEX)[END_INDEX]
     }
 
     private fun showError(message: String) {

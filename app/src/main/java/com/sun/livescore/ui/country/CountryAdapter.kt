@@ -30,9 +30,9 @@ class CountryAdapter(private val countries: List<Country>, private val viewModel
     inner class CountryViewHolder(binding: ItemLeagueCountryBinding) :
         BaseViewHolder<ItemLeagueCountryBinding, Country>(binding) {
 
-        override fun bindView(binding: ItemLeagueCountryBinding, position: Int, score: Country) {
+        override fun bindView(binding: ItemLeagueCountryBinding, position: Int, data: Country) {
             binding.run {
-                this.country = score
+                this.country = data
                 this.viewmodel = viewModel
             }
         }

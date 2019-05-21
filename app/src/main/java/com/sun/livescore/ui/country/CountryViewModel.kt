@@ -47,11 +47,15 @@ class CountryViewModel(private val repository: CountryRepository) : BaseViewMode
             .doOnSubscribe {
                 _countriesSearchLiveData.value = ApiResponse.loading()
             }
+            .map {
+                query?.let { query ->
+                    it.data?.countries?.filter {
+                        it.nameLeague!!.toLowerCase().contains(query.toLowerCase())
+                    } as List<Country>
+                }
+            }
             .subscribe({
-                val leagueCountries = it.data?.countries?.filter {
-                    it.nameLeague!!.toLowerCase().contains(query!!.toLowerCase())
-                } as List<Country>
-                _countriesSearchLiveData.value = ApiResponse.success(leagueCountries)
+                _countriesSearchLiveData.value = ApiResponse.success(it)
             }, {
                 _countriesSearchLiveData.value = ApiResponse.error(it.message.toString())
             })

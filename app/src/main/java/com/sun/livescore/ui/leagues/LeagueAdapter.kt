@@ -30,9 +30,9 @@ class LeagueAdapter(private val leagues: List<League>) :
     inner class LeagueViewHolder(binding: ItemLeaguesInCountryBinding) :
         BaseViewHolder<ItemLeaguesInCountryBinding, League>(binding) {
 
-        override fun bindView(binding: ItemLeaguesInCountryBinding, position: Int, score: League) {
+        override fun bindView(binding: ItemLeaguesInCountryBinding, position: Int, data: League) {
             binding.run {
-                league = score
+                league = data
             }
         }
     }
