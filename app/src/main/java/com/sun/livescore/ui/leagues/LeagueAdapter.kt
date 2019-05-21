@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.sun.livescore.R
-import com.sun.livescore.data.model.leagues.LeagueCountry
-import com.sun.livescore.databinding.ItemLeagueCountryBinding
+import com.sun.livescore.data.model.league.League
+import com.sun.livescore.databinding.ItemLeaguesInCountryBinding
 import com.sun.livescore.ui.base.BaseRecyclerAdapter
 import com.sun.livescore.ui.base.BaseViewHolder
 import com.sun.livescore.ui.leagues.LeagueAdapter.LeagueViewHolder
 
-class LeagueAdapter(private val leagueCountries: List<LeagueCountry>) :
-    BaseRecyclerAdapter<ItemLeagueCountryBinding, LeagueCountry, LeagueViewHolder>(leagueCountries) {
+class LeagueAdapter(private val leagues: List<League>) :
+    BaseRecyclerAdapter<ItemLeaguesInCountryBinding, League, LeagueViewHolder>(leagues) {
 
-    override fun getLayoutRes(viewType: Int): Int = R.layout.item_league_country
+    override fun getLayoutRes(viewType: Int): Int = R.layout.item_leagues_in_country
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LeagueViewHolder {
         return LeagueViewHolder(
@@ -24,15 +24,15 @@ class LeagueAdapter(private val leagueCountries: List<LeagueCountry>) :
     }
 
     override fun getItemCount(): Int {
-        return leagueCountries.size
+        return leagues.size
     }
 
-    class LeagueViewHolder(binding: ItemLeagueCountryBinding) :
-        BaseViewHolder<ItemLeagueCountryBinding, LeagueCountry>(binding) {
+    inner class LeagueViewHolder(binding: ItemLeaguesInCountryBinding) :
+        BaseViewHolder<ItemLeaguesInCountryBinding, League>(binding) {
 
-        override fun bindView(binding: ItemLeagueCountryBinding, position: Int, score: LeagueCountry) {
+        override fun bindView(binding: ItemLeaguesInCountryBinding, position: Int, data: League) {
             binding.run {
-                this.leagueCountry = score
+                league = data
             }
         }
     }

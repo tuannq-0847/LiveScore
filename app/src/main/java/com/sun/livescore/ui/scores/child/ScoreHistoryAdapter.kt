@@ -31,14 +31,14 @@ class ScoreHistoryAdapter(histories: List<History>) :
     inner class HistoryViewHolder(binding: ItemMatchScoreBinding) :
         BaseViewHolder<ItemMatchScoreBinding, History>(binding) {
 
-        override fun bindView(binding: ItemMatchScoreBinding, position: Int, score: History) {
+        override fun bindView(binding: ItemMatchScoreBinding, position: Int, data: History) {
             binding.run {
                 isScore = false
-                scoreHistory = score
-                val scores = Util.getScoreFromString(score.score)
+                scoreHistory = data
+                val scores = Util.getScoreFromString(data.score)
                 scoreHomeTeam = scores[Constant.FIRST_SCORE_INDEX]
                 scoreAwayTeam = scores[Constant.SECOND_SCORE_INDEX]
-                timeHistory = score.time
+                timeHistory = data.time
             }
         }
     }

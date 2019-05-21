@@ -1,19 +1,19 @@
-package com.sun.livescore.data.model.leagues
+package com.sun.livescore.data.model.league
 
 import com.google.gson.annotations.SerializedName
 
-data class LeagueCountry(
+data class League(
     @SerializedName(ID)
     var id: String? = null,
     @SerializedName(NAME)
-    var nameLeague: String? = null,
-    @SerializedName(IS_REAL)
-    var isRealLeague: String? = null
+    var name: String? = null,
+    @SerializedName(COUNTRY_ID)
+    var countryId: String? = null
 ) {
 
     companion object {
         const val ID = "id"
         const val NAME = "name"
-        const val IS_REAL = "is_real"
+        const val COUNTRY_ID = "country_id"
     }
 }

@@ -29,11 +29,11 @@ class ScoreFixtureAdapter(fixtures: List<Fixture>) :
     inner class FixtureViewHolder(binding: ItemMatchScoreBinding) :
         BaseViewHolder<ItemMatchScoreBinding, Fixture>(binding) {
 
-        override fun bindView(binding: ItemMatchScoreBinding, position: Int, score: Fixture) {
+        override fun bindView(binding: ItemMatchScoreBinding, position: Int, data: Fixture) {
             binding.run {
                 isScore = true
-                scoreFixture = score
-                score.time?.let { timeFixture = getTimeHourMin(it) }
+                scoreFixture = data
+                data.time?.let { timeFixture = getTimeHourMin(it) }
             }
         }
     }

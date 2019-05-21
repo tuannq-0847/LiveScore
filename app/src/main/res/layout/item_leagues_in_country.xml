@@ -1,24 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/color_title">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageEnsignCountry"
-        android:layout_width="@dimen/dp_55"
-        android:layout_height="@dimen/dp_25"
-        android:layout_marginStart="@dimen/dp_4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textNameLeagueCountry"
-        android:layout_width="wrap_content"
+        <variable
+            name="league"
+            type="com.sun.livescore.data.model.league.League" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/color_white"
-        app:layout_constraintStart_toEndOf="@+id/imageEnsignCountry"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@color/color_background">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageEnsignCountry"
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_25"
+            android:layout_marginStart="@dimen/dp_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textNameLeagueCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{league.name}"
+            android:textColor="@color/color_white"
+            app:layout_constraintStart_toEndOf="@+id/imageEnsignCountry"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_8"
+            android:background="@color/color_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textNameLeagueCountry" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
