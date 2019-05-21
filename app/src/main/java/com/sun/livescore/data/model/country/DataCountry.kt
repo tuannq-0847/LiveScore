@@ -1,10 +1,10 @@
-package com.sun.livescore.data.model.leagues
+package com.sun.livescore.data.model.country
 
 import com.google.gson.annotations.SerializedName
 
-data class DataLeague(
+data class DataCountry(
     @SerializedName(COUNTRY)
-    var leagueCountries: List<LeagueCountry>? = null
+    var countries: List<Country>? = null
 ) {
 
     companion object {

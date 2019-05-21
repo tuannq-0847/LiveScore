@@ -5,8 +5,12 @@
     <data>
 
         <variable
-            name="leagueCountry"
-            type="com.sun.livescore.data.model.leagues.LeagueCountry" />
+            name="viewmodel"
+            type="com.sun.livescore.ui.country.CountryViewModel" />
+
+        <variable
+            name="country"
+            type="com.sun.livescore.data.model.country.Country" />
 
     </data>
 
@@ -29,7 +33,8 @@
             android:id="@+id/textNameCountry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{leagueCountry.nameLeague}"
+            android:onClick="@{()-> viewmodel.onCountryClick(country)}"
+            android:text="@{country.nameLeague}"
             android:textColor="@color/color_white"
             app:layout_constraintBottom_toBottomOf="@+id/imageEnsign"
             app:layout_constraintLeft_toRightOf="@+id/imageEnsign"

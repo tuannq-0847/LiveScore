@@ -1,12 +1,9 @@
-package com.sun.livescore.ui.leagues
+package com.sun.livescore.ui.country
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.SearchView
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,18 +11,19 @@ import com.sun.livescore.R
 import com.sun.livescore.data.model.EnumStatus.ERROR
 import com.sun.livescore.data.model.EnumStatus.LOADING
 import com.sun.livescore.data.model.EnumStatus.SUCCESS
-import com.sun.livescore.data.model.leagues.LeagueCountry
-import com.sun.livescore.data.model.leagues.LeagueResponse
+import com.sun.livescore.data.model.country.Country
+import com.sun.livescore.data.model.country.CountryResponse
 import com.sun.livescore.data.remote.response.ApiResponse
 import com.sun.livescore.ui.base.BaseFragment
+import com.sun.livescore.ui.leagues.LeagueFragment
 import com.sun.livescore.util.ContextExtension.showMessage
 import kotlinx.android.synthetic.main.league_country_fragment.progressLeague
 import kotlinx.android.synthetic.main.league_country_fragment.recyclerLeague
 import kotlinx.android.synthetic.main.league_country_fragment.searchLeagues
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LeaguesFragment : BaseFragment(), OnQueryTextListener {
-    private val leaguesViewModel: LeaguesViewModel by viewModel()
+class CountryFragment : BaseFragment(), OnQueryTextListener {
+    private val countryViewModel: CountryViewModel by viewModel()
 
     override val layoutId: Int
         get() = R.layout.league_country_fragment
@@ -35,16 +33,24 @@ class LeaguesFragment : BaseFragment(), OnQueryTextListener {
     }
 
     override fun initComponents() {
-        leaguesViewModel.getLeagueCountry()
-        leaguesViewModel.leaguesLiveData.observe(this, Observer {
+        countryViewModel.getLeagueCountry()
+        countryViewModel.countriesLiveData.observe(this, Observer {
             handleLeaguesResponse(it)
         })
-        leaguesViewModel.leaguesSearchLiveData.observe(this, Observer {
+        countryViewModel.countriesSearchLiveData.observe(this, Observer {
             handleSearchResult(it)
+        })
+        countryViewModel.countryLiveData.observe(this, Observer {
+            val leagueFragment = LeagueFragment.newInstance(it)
+            activity?.supportFragmentManager
+                ?.beginTransaction()
+                ?.add(R.id.layoutParent, leagueFragment)
+                ?.addToBackStack(null)
+                ?.commit()
         })
     }
 
-    private fun handleSearchResult(apiResponse: ApiResponse<List<LeagueCountry>>) {
+    private fun handleSearchResult(apiResponse: ApiResponse<List<Country>>) {
         when (apiResponse.status) {
             SUCCESS -> showSuccessSearching(apiResponse.data)
             LOADING -> showLoading(true)
@@ -52,13 +58,13 @@ class LeaguesFragment : BaseFragment(), OnQueryTextListener {
         }
     }
 
-    private fun showSuccessSearching(data: List<LeagueCountry>?) {
+    private fun showSuccessSearching(data: List<Country>?) {
         showLoading(false)
         displaySearchResult(data)
     }
 
-    private fun displaySearchResult(data: List<LeagueCountry>?) {
-        val adapter = data?.let { LeagueAdapter(it) }
+    private fun displaySearchResult(data: List<Country>?) {
+        val adapter = data?.let { CountryAdapter(it, countryViewModel) }
         recyclerLeague.layoutManager = LinearLayoutManager(context)
         recyclerLeague.adapter = adapter
     }
@@ -74,12 +80,12 @@ class LeaguesFragment : BaseFragment(), OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         newText?.let {
-            leaguesViewModel.searchLeaguesByName(newText)
+            countryViewModel.searchLeaguesByName(newText)
         }
         return true
     }
 
-    private fun handleLeaguesResponse(apiResponse: ApiResponse<LeagueResponse>) {
+    private fun handleLeaguesResponse(apiResponse: ApiResponse<CountryResponse>) {
         when (apiResponse.status) {
             SUCCESS -> showSuccess(apiResponse.data)
             LOADING -> showLoading(true)
@@ -95,13 +101,13 @@ class LeaguesFragment : BaseFragment(), OnQueryTextListener {
         progressLeague.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun showSuccess(data: LeagueResponse?) {
+    private fun showSuccess(data: CountryResponse?) {
         showLoading(false)
         displayDataToLeagues(data)
     }
 
-    fun displayDataToLeagues(data: LeagueResponse?) {
-        val adapter = data?.data?.leagueCountries?.let { LeagueAdapter(it) }
+    fun displayDataToLeagues(data: CountryResponse?) {
+        val adapter = data?.data?.countries?.let { CountryAdapter(it, countryViewModel) }
         recyclerLeague.layoutManager = LinearLayoutManager(context)
         recyclerLeague.adapter = adapter
     }
