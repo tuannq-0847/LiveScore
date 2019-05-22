@@ -1,4 +1,4 @@
-package com.sun.livescore.data.remote
+package com.sun.livescore.data.remote.score
 
 import com.sun.livescore.data.model.score.fixture.DataFixture
 import com.sun.livescore.data.model.score.fixture.Fixture

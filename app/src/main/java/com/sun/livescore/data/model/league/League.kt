@@ -1,7 +1,10 @@
 package com.sun.livescore.data.model.league
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class League(
     @SerializedName(ID)
     var id: String? = null,
@@ -9,7 +12,7 @@ data class League(
     var name: String? = null,
     @SerializedName(COUNTRY_ID)
     var countryId: String? = null
-) {
+) : Parcelable {
 
     companion object {
         const val ID = "id"

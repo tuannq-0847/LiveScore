@@ -4,6 +4,7 @@ import com.sun.livescore.data.model.country.CountryResponse
 import com.sun.livescore.data.model.league.LeagueResponse
 import com.sun.livescore.data.model.score.fixture.FixtureResponse
 import com.sun.livescore.data.model.score.history.HistoryResponse
+import com.sun.livescore.data.model.standing.StandingResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -21,13 +22,19 @@ interface ApiService {
     @GET(API_GET_LEAGUES)
     fun getLeagues(@Query(COUNTRY) country: String): Single<LeagueResponse>
 
+    @GET(API_GET_STANDINDS)
+    fun getStandings(@Query(LEAGUE) leagueId: String, @Query(SEASON) seasonId: String): Single<StandingResponse>
+
     companion object {
 
         const val API_GET_FIXTURES = "api-client/fixtures/matches.json"
         const val API_GET_HISTORY = "api-client/scores/history.json"
         const val API_GET_COUNTRIES = "api-client/countries/list.json"
         const val API_GET_LEAGUES = "api-client/leagues/list.json"
+        const val API_GET_STANDINDS = "api-client/leagues/table.json"
         const val COUNTRY = "country"
+        const val LEAGUE = "league"
+        const val SEASON = "season"
         const val KEY = "key"
         const val SECRET = "secret"
         const val DATE = "date"
