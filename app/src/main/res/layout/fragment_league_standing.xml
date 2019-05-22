@@ -7,43 +7,50 @@
 
     <TextView
         android:id="@+id/textHashTag"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_24"
         android:layout_height="wrap_content"
         android:text="@string/hashtag"
+        android:textAlignment="center"
         android:textColor="@color/color_white"
-        android:textSize="@dimen/sp_24"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textTitlePts"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_36"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_8"
+        android:text="@string/titlePts"
+        android:textAlignment="center"
         android:textColor="@color/color_white"
-        android:textSize="@dimen/sp_24"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textTitleGd"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_36"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
+        android:text="@string/titleGd"
+        android:textAlignment="center"
         android:textColor="@color/color_white"
-        android:textSize="@dimen/sp_24"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintEnd_toStartOf="@+id/textTitlePts"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textTitleP"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_36"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_16"
+        android:text="@string/titleP"
+        android:textAlignment="center"
         android:textColor="@color/color_white"
-        android:textSize="@dimen/sp_24"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintEnd_toStartOf="@+id/textTitleGd"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,5 +69,14 @@
         android:layout_height="wrap_content"
         android:background="@color/color_title"
         app:constraint_referenced_ids="textHashTag,textTitlePts,textTitleGd,textTitleP" />
+
+    <ProgressBar
+        android:id="@+id/progressStanding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

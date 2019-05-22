@@ -8,13 +8,18 @@
             name="league"
             type="com.sun.livescore.data.model.league.League" />
 
+        <variable
+            name="viewModel"
+            type="com.sun.livescore.ui.leagues.LeagueViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_8"
-        android:background="@color/color_background">
+        android:background="@color/color_background"
+        android:onClick="@{()-> viewModel.onLeagueClick(league)}">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageEnsignCountry"
