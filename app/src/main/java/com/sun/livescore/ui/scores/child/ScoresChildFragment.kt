@@ -15,15 +15,18 @@ import com.sun.livescore.data.model.score.fixture.FixtureResponse
 import com.sun.livescore.data.model.score.history.HistoryResponse
 import com.sun.livescore.data.remote.response.ApiResponse
 import com.sun.livescore.ui.base.BaseFragment
+import com.sun.livescore.ui.live_event.LiveEventFragment
 import com.sun.livescore.ui.scores.SharedViewModel
 import com.sun.livescore.util.ContextExtension.showMessage
 import kotlinx.android.synthetic.main.fragment_scores_child.progressLoading
 import kotlinx.android.synthetic.main.fragment_scores_child.recyclerScores
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ScoresChildFragment : BaseFragment() {
-    private var sharedViewModel: SharedViewModel? = null
-    private val scoreChildViewModel: ScoreChildViewModel by viewModel()
+open class ScoresChildFragment : BaseFragment() {
+    open var sharedViewModel: SharedViewModel? = null
+    open val scoreChildViewModel: ScoreChildViewModel by viewModel()
+    private var scoreHistoryAdapter: ScoreHistoryAdapter? = null
+    private var scoreFixtureAdapter: ScoreFixtureAdapter? = null
     override val layoutId: Int
         get() = R.layout.fragment_scores_child
 
@@ -31,16 +34,32 @@ class ScoresChildFragment : BaseFragment() {
         return inflater.inflate(layoutId, container, false)
     }
 
-    override fun initComponents() {
+    override fun onStart() {
+        super.onStart()
         sharedViewModel = activity?.run {
             ViewModelProviders.of(this).get(SharedViewModel::class.java)
         } ?: throw Exception()
         sharedViewModel?.dateLiveData?.observe(this, ScoreObserver())
+    }
+
+    override fun initComponents() {
+        doObserve()
+    }
+
+    private fun doObserve() {
         scoreChildViewModel.scoreHistoryLiveData.observe(this, Observer { apiResponse ->
             handleHistoryResponse(apiResponse)
         })
         scoreChildViewModel.scoreFixtureLiveData.observe(this, Observer { apiResponse ->
             handleFixtureResponse(apiResponse)
+        })
+        scoreChildViewModel.matchLiveData.observe(this, Observer {
+            val liveEventFragment = LiveEventFragment.newInstance(it)
+            activity?.supportFragmentManager
+                ?.beginTransaction()
+                ?.add(R.id.layoutParent, liveEventFragment)
+                ?.addToBackStack(null)
+                ?.commit()
         })
     }
 
@@ -61,27 +80,38 @@ class ScoresChildFragment : BaseFragment() {
     }
 
     private fun displayHistory(data: HistoryResponse?) {
+        showLoading(false)
         data?.let { loadHistoryToView(data) }
     }
 
     private fun displayFixture(data: FixtureResponse?) {
+        showLoading(false)
         data?.let { loadFixtureToView(data) }
     }
 
     private fun loadHistoryToView(data: HistoryResponse) {
         data.data?.histories?.let {
-            val adapter = ScoreHistoryAdapter(it)
+            scoreHistoryAdapter = ScoreHistoryAdapter(it, scoreChildViewModel)
             recyclerScores.layoutManager = LinearLayoutManager(context)
-            recyclerScores.adapter = adapter
+            recyclerScores.adapter = scoreHistoryAdapter
         }
     }
 
     private fun loadFixtureToView(data: FixtureResponse) {
         data.data?.fixtures?.let {
-            val adapter = ScoreFixtureAdapter(it)
+            scoreFixtureAdapter = ScoreFixtureAdapter(it, scoreChildViewModel)
             recyclerScores.layoutManager = LinearLayoutManager(context)
-            recyclerScores.adapter = adapter
+            recyclerScores.adapter = scoreFixtureAdapter
         }
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        showLoading(true)
+        scoreHistoryAdapter?.clearData()
+        scoreHistoryAdapter?.notifyDataSetChanged()
+        scoreFixtureAdapter?.clearData()
+        scoreFixtureAdapter?.notifyDataSetChanged()
     }
 
     private fun showError(message: String) {
@@ -89,7 +119,9 @@ class ScoresChildFragment : BaseFragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        progressLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
+        progressLoading?.run {
+            visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
     }
 
     inner class ScoreObserver : Observer<String> {

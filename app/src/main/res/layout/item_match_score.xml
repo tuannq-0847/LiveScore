@@ -32,12 +32,17 @@
             name="scoreAwayTeam"
             type="String" />
 
+        <variable
+            name="viewModel"
+            type="com.sun.livescore.ui.scores.child.ScoreChildViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_background">
+        android:background="@color/color_background"
+        android:onClick="@{()-> viewModel.onMatchClick(isScore?scoreFixture:scoreHistory)}">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textNameLeague"

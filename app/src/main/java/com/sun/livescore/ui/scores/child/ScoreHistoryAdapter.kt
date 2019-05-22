@@ -12,7 +12,10 @@ import com.sun.livescore.ui.scores.child.ScoreHistoryAdapter.HistoryViewHolder
 import com.sun.livescore.util.Constant
 import com.sun.livescore.util.Util
 
-class ScoreHistoryAdapter(histories: List<History>) :
+class ScoreHistoryAdapter(
+    private var histories: List<History>,
+    private val scoreViewModel: ScoreChildViewModel
+) :
     BaseRecyclerAdapter<ItemMatchScoreBinding, History, HistoryViewHolder>(histories) {
 
     override fun onCreateViewHolder(
@@ -26,6 +29,10 @@ class ScoreHistoryAdapter(histories: List<History>) :
         )
     }
 
+    fun clearData() {
+        (histories as ArrayList).clear()
+    }
+
     override fun getLayoutRes(viewType: Int): Int = R.layout.item_match_score
 
     inner class HistoryViewHolder(binding: ItemMatchScoreBinding) :
@@ -34,6 +41,7 @@ class ScoreHistoryAdapter(histories: List<History>) :
         override fun bindView(binding: ItemMatchScoreBinding, position: Int, data: History) {
             binding.run {
                 isScore = false
+                viewModel = scoreViewModel
                 scoreHistory = data
                 val scores = Util.getScoreFromString(data.score)
                 scoreHomeTeam = scores[Constant.FIRST_SCORE_INDEX]

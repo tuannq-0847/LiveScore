@@ -1,6 +1,7 @@
 package com.sun.livescore.data.remote.request
 
 import com.sun.livescore.data.model.country.CountryResponse
+import com.sun.livescore.data.model.event.EventResponse
 import com.sun.livescore.data.model.league.LeagueResponse
 import com.sun.livescore.data.model.score.fixture.FixtureResponse
 import com.sun.livescore.data.model.score.history.HistoryResponse
@@ -25,8 +26,11 @@ interface ApiService {
     @GET(API_GET_STANDINDS)
     fun getStandings(@Query(LEAGUE) leagueId: String, @Query(SEASON) seasonId: String): Single<StandingResponse>
 
-    @GET(APIT_GET_LIVE)
+    @GET(API_GET_LIVE)
     fun getLiveScores(): Single<HistoryResponse>
+
+    @GET(API_GET_EVENTS)
+    fun getEvents(@Query(ID_MATCH) id: String): Single<EventResponse>
 
     companion object {
 
@@ -35,7 +39,8 @@ interface ApiService {
         const val API_GET_COUNTRIES = "api-client/countries/list.json"
         const val API_GET_LEAGUES = "api-client/leagues/list.json"
         const val API_GET_STANDINDS = "api-client/leagues/table.json"
-        const val APIT_GET_LIVE = "api-client/scores/live.json"
+        const val API_GET_LIVE = "api-client/scores/live.json"
+        const val API_GET_EVENTS = "api-client/scores/events.json"
         const val COUNTRY = "country"
         const val LEAGUE = "league"
         const val SEASON = "season"
@@ -44,5 +49,6 @@ interface ApiService {
         const val DATE = "date"
         const val FROM = "from"
         const val TO = "to"
+        const val ID_MATCH = "id"
     }
 }

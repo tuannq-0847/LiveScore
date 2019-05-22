@@ -1,7 +1,10 @@
 package com.sun.livescore.data.model.score.fixture
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 open class Fixture(
     @SerializedName(ID)
     var id: String? = null,
@@ -17,7 +20,7 @@ open class Fixture(
     var location: String? = null,
     @SerializedName(LEAGUE_ID)
     var leagueId: String? = null
-) {
+) : Parcelable {
 
     companion object {
         const val DATE = "date"
