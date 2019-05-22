@@ -10,7 +10,7 @@ import com.sun.livescore.ui.base.BaseRecyclerAdapter
 import com.sun.livescore.ui.base.BaseViewHolder
 import com.sun.livescore.ui.leagues.LeagueAdapter.LeagueViewHolder
 
-class LeagueAdapter(private val leagues: List<League>) :
+class LeagueAdapter(private val leagues: List<League>, private val leagueViewModel: LeagueViewModel) :
     BaseRecyclerAdapter<ItemLeaguesInCountryBinding, League, LeagueViewHolder>(leagues) {
 
     override fun getLayoutRes(viewType: Int): Int = R.layout.item_leagues_in_country
@@ -33,6 +33,7 @@ class LeagueAdapter(private val leagues: List<League>) :
         override fun bindView(binding: ItemLeaguesInCountryBinding, position: Int, data: League) {
             binding.run {
                 league = data
+                viewModel = leagueViewModel
             }
         }
     }

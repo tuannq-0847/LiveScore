@@ -2,6 +2,7 @@ package com.sun.livescore.ui.leagues
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.sun.livescore.data.model.league.League
 import com.sun.livescore.data.model.league.LeagueResponse
 import com.sun.livescore.data.remote.response.ApiResponse
 import com.sun.livescore.data.repository.LeagueRepository
@@ -13,6 +14,14 @@ class LeagueViewModel(private val repository: LeagueRepository) : BaseViewModel(
     private val _leagueLiveData = MutableLiveData<ApiResponse<LeagueResponse>>()
     val leagueLiveData: LiveData<ApiResponse<LeagueResponse>>
         get() = _leagueLiveData
+
+    private val _leagueListenerLiveData = MutableLiveData<League>()
+    val leagueListenerLiveData: LiveData<League>
+        get() = _leagueListenerLiveData
+
+    fun onLeagueClick(league: League) {
+        _leagueListenerLiveData.value = league
+    }
 
     fun getLeagues(country: String) {
         compositeDisposable.add(
