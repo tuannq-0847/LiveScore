@@ -6,4 +6,7 @@
     <string name="league_title">League</string>
     <string name="search_leagues">Search</string>
     <string name="hashtag">#</string>
+    <string name="titleP">P</string>
+    <string name="titleGd">GD</string>
+    <string name="titlePts">PTS</string>
 </resources>
