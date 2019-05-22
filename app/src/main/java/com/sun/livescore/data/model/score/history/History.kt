@@ -14,7 +14,9 @@ data class History(
     @SerializedName(FT_SCORE)
     var ftScore: String? = null,
     @SerializedName(STATUS)
-    var status: String? = null
+    var status: String? = null,
+    @SerializedName(LEAGUE_NAME)
+    var leagueName: String? = null
 ) : Parcelable, Fixture() {
 
     companion object {
@@ -22,5 +24,6 @@ data class History(
         const val HT_SCORE = "ht_score"
         const val FT_SCORE = "ft_score"
         const val STATUS = "status"
+        const val LEAGUE_NAME = "league_name"
     }
 }
