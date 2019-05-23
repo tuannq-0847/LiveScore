@@ -11,6 +11,7 @@ import com.sun.livescore.data.repository.StandingRepository
 import com.sun.livescore.ui.country.CountryViewModel
 import com.sun.livescore.ui.leagues.LeagueViewModel
 import com.sun.livescore.ui.scores.child.ScoreChildViewModel
+import com.sun.livescore.ui.scores.live.LiveScoreViewModel
 import com.sun.livescore.ui.scores.parent.ScoreViewModel
 import com.sun.livescore.ui.standing.StandingViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -22,6 +23,7 @@ val appModule = module {
     viewModel { ScoreChildViewModel(get()) }
     viewModel { LeagueViewModel(get()) }
     viewModel { StandingViewModel(get()) }
+    viewModel { LiveScoreViewModel(get()) }
     single { ScoreRemoteDataSource(get()) }
     single { ScoreRepository(get()) }
     single { CountryRemoteDataSource(get()) }

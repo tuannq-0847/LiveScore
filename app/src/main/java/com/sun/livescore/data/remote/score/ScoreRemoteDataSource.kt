@@ -8,6 +8,11 @@ import io.reactivex.Single
 
 class ScoreRemoteDataSource(private val apiService: ApiService) :
     Remote {
-    override fun getScoresHistory(from: String, to: String): Single<HistoryResponse> = apiService.getScoresHistory(from, to)
+
+    override fun getLiveScores(): Single<HistoryResponse> = apiService.getLiveScores()
+
+    override fun getScoresHistory(from: String, to: String): Single<HistoryResponse> =
+        apiService.getScoresHistory(from, to)
+
     override fun getScoresFixtures(date: String): Single<FixtureResponse> = apiService.getScoresFixtures(date)
 }

@@ -25,6 +25,9 @@ interface ApiService {
     @GET(API_GET_STANDINDS)
     fun getStandings(@Query(LEAGUE) leagueId: String, @Query(SEASON) seasonId: String): Single<StandingResponse>
 
+    @GET(APIT_GET_LIVE)
+    fun getLiveScores(): Single<HistoryResponse>
+
     companion object {
 
         const val API_GET_FIXTURES = "api-client/fixtures/matches.json"
@@ -32,6 +35,7 @@ interface ApiService {
         const val API_GET_COUNTRIES = "api-client/countries/list.json"
         const val API_GET_LEAGUES = "api-client/leagues/list.json"
         const val API_GET_STANDINDS = "api-client/leagues/table.json"
+        const val APIT_GET_LIVE = "api-client/scores/live.json"
         const val COUNTRY = "country"
         const val LEAGUE = "league"
         const val SEASON = "season"

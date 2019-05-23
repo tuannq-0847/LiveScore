@@ -12,4 +12,6 @@
     <color name="color_title">#444345</color>
     <color name="color_gray">#313331</color>
     <color name="color_light_gray">#CCCCCC</color>
+    <color name="color_in_match">#13EF74</color>
+    <color name="color_finished">#E22B1B</color>
 </resources>
