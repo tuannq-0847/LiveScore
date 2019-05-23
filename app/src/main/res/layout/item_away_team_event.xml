@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="event"
+            type="com.sun.livescore.data.model.event.Event" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@color/color_background">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textTimeLiveEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:text="@{event.time+`'`}"
+            android:textColor="@color/color_white"
+            app:layout_constraintBottom_toBottomOf="@+id/imageEventAway"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageEventAway" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textAwayPlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:ellipsize="start"
+            android:singleLine="true"
+            android:text="@{event.player}"
+            android:textColor="@color/color_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageEventAway" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageEventAway"
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_8"
+            android:background="@drawable/ic_yellow_card"
+            android:scaleType="centerInside"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toEndOf="@+id/guidelineAway"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginStart="@dimen/dp_8" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineAway"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_8"
+            android:background="@color/color_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageEventAway" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
