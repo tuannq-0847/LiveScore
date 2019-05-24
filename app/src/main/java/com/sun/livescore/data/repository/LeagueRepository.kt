@@ -7,4 +7,5 @@ import io.reactivex.Single
 
 class LeagueRepository(private val leagueRemoteDataSource: LeagueRemoteDataSource) : LeagueDataSource.Remote {
     override fun getLeagues(country: String): Single<LeagueResponse> = leagueRemoteDataSource.getLeagues(country)
+    override fun getAllLeagues(): Single<LeagueResponse> = leagueRemoteDataSource.getAllLeagues()
 }

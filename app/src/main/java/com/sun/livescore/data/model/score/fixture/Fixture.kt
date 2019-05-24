@@ -19,7 +19,9 @@ open class Fixture(
     @SerializedName(LOCATION)
     var location: String? = null,
     @SerializedName(LEAGUE_ID)
-    var leagueId: String? = null
+    var leagueId: String? = null,
+    @SerializedName(LEAGUE_NAME)
+    var leagueName: String? = null
 ) : Parcelable {
 
     companion object {
@@ -30,5 +32,6 @@ open class Fixture(
         const val ID = "id"
         const val LOCATION = "location"
         const val LEAGUE_ID = "league_id"
+        const val LEAGUE_NAME = "league_name"
     }
 }

@@ -50,7 +50,7 @@
             android:layout_height="@dimen/dp_24"
             android:background="@color/color_gray"
             android:gravity="center_vertical"
-            android:text="@{scoreHistory.leagueName}"
+            android:text="@{isScore?scoreFixture.leagueName:scoreHistory.leagueName}"
             android:textColor="@color/color_white"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"

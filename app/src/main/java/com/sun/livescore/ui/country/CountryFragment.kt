@@ -19,6 +19,7 @@ import com.sun.livescore.data.remote.response.ApiResponse
 import com.sun.livescore.ui.base.BaseFragment
 import com.sun.livescore.ui.leagues.LeagueFragment
 import com.sun.livescore.util.ContextExtension.showMessage
+import kotlinx.android.synthetic.main.league_country_fragment.imageEmptyLeagues
 import kotlinx.android.synthetic.main.league_country_fragment.progressLeague
 import kotlinx.android.synthetic.main.league_country_fragment.recyclerLeague
 import kotlinx.android.synthetic.main.league_country_fragment.searchLeagues
@@ -66,7 +67,10 @@ class CountryFragment : BaseFragment(), OnQueryTextListener {
     }
 
     private fun displaySearchResult(data: List<Country>?) {
-        val adapter = data?.let { CountryAdapter(it, countryViewModel) }
+        val adapter = data?.let {
+            imageEmptyLeagues.visibility = countryViewModel.showVisible(countryViewModel.eventIsEmpty(it))
+            CountryAdapter(it, countryViewModel)
+        }
         recyclerLeague.layoutManager = LinearLayoutManager(context)
         recyclerLeague.adapter = adapter
     }
@@ -113,7 +117,7 @@ class CountryFragment : BaseFragment(), OnQueryTextListener {
         displayDataToLeagues(data)
     }
 
-    fun displayDataToLeagues(data: CountryResponse?) {
+    private fun displayDataToLeagues(data: CountryResponse?) {
         val adapter = data?.data?.countries?.let { CountryAdapter(it, countryViewModel) }
         recyclerLeague.layoutManager = LinearLayoutManager(context)
         recyclerLeague.adapter = adapter

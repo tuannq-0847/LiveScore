@@ -13,6 +13,7 @@ import com.sun.livescore.data.model.league.LeagueResponse
 import com.sun.livescore.ui.base.BaseFragment
 import com.sun.livescore.ui.standing.StandingFragment
 import com.sun.livescore.util.ContextExtension.showMessage
+import kotlinx.android.synthetic.main.fragment_leagues_in_country.imageEmptyCountry
 import kotlinx.android.synthetic.main.fragment_leagues_in_country.progressLeagues
 import kotlinx.android.synthetic.main.fragment_leagues_in_country.recyclerLeagues
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -55,6 +56,7 @@ class LeagueFragment : BaseFragment() {
 
     private fun displayLeaguesToView(data: LeagueResponse?) {
         data?.data?.leagues?.let {
+            imageEmptyCountry.visibility = leagueViewModel.showVisible(leagueViewModel.eventIsEmpty(it))
             val adapter = LeagueAdapter(it, leagueViewModel)
             recyclerLeagues.adapter = adapter
             recyclerLeagues.layoutManager = LinearLayoutManager(context)

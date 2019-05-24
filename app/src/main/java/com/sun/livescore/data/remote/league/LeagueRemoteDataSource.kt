@@ -8,4 +8,5 @@ import io.reactivex.Single
 class LeagueRemoteDataSource(private val apiService: ApiService) :
     Remote {
     override fun getLeagues(country: String): Single<LeagueResponse> = apiService.getLeagues(country)
+    override fun getAllLeagues(): Single<LeagueResponse> = apiService.getAllLeagues()
 }

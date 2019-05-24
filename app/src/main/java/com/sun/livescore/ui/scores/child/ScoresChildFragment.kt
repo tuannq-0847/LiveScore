@@ -11,8 +11,8 @@ import com.sun.livescore.R
 import com.sun.livescore.data.model.EnumStatus.ERROR
 import com.sun.livescore.data.model.EnumStatus.LOADING
 import com.sun.livescore.data.model.EnumStatus.SUCCESS
-import com.sun.livescore.data.model.score.fixture.FixtureResponse
-import com.sun.livescore.data.model.score.history.HistoryResponse
+import com.sun.livescore.data.model.score.fixture.Fixture
+import com.sun.livescore.data.model.score.history.History
 import com.sun.livescore.data.remote.response.ApiResponse
 import com.sun.livescore.ui.base.BaseFragment
 import com.sun.livescore.ui.live_event.LiveEventFragment
@@ -61,7 +61,7 @@ open class ScoresChildFragment : BaseFragment() {
         })
     }
 
-    private fun handleHistoryResponse(apiResponse: ApiResponse<HistoryResponse>) {
+    private fun handleHistoryResponse(apiResponse: ApiResponse<List<History>>) {
         when (apiResponse.status) {
             LOADING -> showLoading(true)
             ERROR -> showError(apiResponse.message)
@@ -69,7 +69,7 @@ open class ScoresChildFragment : BaseFragment() {
         }
     }
 
-    private fun handleFixtureResponse(apiResponse: ApiResponse<FixtureResponse>) {
+    private fun handleFixtureResponse(apiResponse: ApiResponse<List<Fixture>>) {
         when (apiResponse.status) {
             LOADING -> showLoading(true)
             ERROR -> showError(apiResponse.message)
@@ -77,26 +77,27 @@ open class ScoresChildFragment : BaseFragment() {
         }
     }
 
-    private fun displayHistory(data: HistoryResponse?) {
+    private fun displayHistory(data: List<History>?) {
         showLoading(false)
         data?.let { loadHistoryToView(data) }
     }
 
-    private fun displayFixture(data: FixtureResponse?) {
+    private fun displayFixture(data: List<Fixture>?) {
         showLoading(false)
         data?.let { loadFixtureToView(data) }
     }
 
-    private fun loadHistoryToView(data: HistoryResponse) {
-        data.data?.histories?.let {
+    private fun loadHistoryToView(data: List<History>?) {
+        data?.let {
             scoreHistoryAdapter = ScoreHistoryAdapter(it, scoreChildViewModel)
             recyclerScores.layoutManager = LinearLayoutManager(context)
+            scoreHistoryAdapter!!.notifyDataSetChanged()
             recyclerScores.adapter = scoreHistoryAdapter
         }
     }
 
-    private fun loadFixtureToView(data: FixtureResponse) {
-        data.data?.fixtures?.let {
+    private fun loadFixtureToView(data: List<Fixture>?) {
+        data?.let {
             scoreFixtureAdapter = ScoreFixtureAdapter(it, scoreChildViewModel)
             recyclerScores.layoutManager = LinearLayoutManager(context)
             recyclerScores.adapter = scoreFixtureAdapter
