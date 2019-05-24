@@ -2,6 +2,7 @@ package com.sun.livescore.ui.live_event
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.sun.livescore.data.model.event.Event
 import com.sun.livescore.data.model.event.EventResponse
 import com.sun.livescore.data.model.score.fixture.Fixture
 import com.sun.livescore.data.remote.response.ApiResponse
@@ -12,8 +13,13 @@ import io.reactivex.schedulers.Schedulers
 
 class LiveEventViewModel(private val liveEventRepository: LiveEventRepository) : BaseViewModel() {
     private val _liveEventLiveData = MutableLiveData<ApiResponse<EventResponse>>()
+    val eventLiveData = MutableLiveData<Event>()
     val liveEventLiveData: LiveData<ApiResponse<EventResponse>>
         get() = _liveEventLiveData
+
+    fun setEvent(event: Event) {
+        eventLiveData.value = event
+    }
 
     fun getLiveEvents(fixture: Fixture) {
         fixture.id?.run {

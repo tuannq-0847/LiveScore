@@ -31,6 +31,7 @@ class ScoreHistoryAdapter(
 
     fun clearData() {
         (histories as ArrayList).clear()
+        notifyDataSetChanged()
     }
 
     override fun getLayoutRes(viewType: Int): Int = R.layout.item_match_score

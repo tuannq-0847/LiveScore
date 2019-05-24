@@ -29,6 +29,7 @@ class ScoreFixtureAdapter(
 
     fun clearData() {
         (fixtures as ArrayList).clear()
+        notifyDataSetChanged()
     }
 
     override fun getLayoutRes(viewType: Int): Int = R.layout.item_match_score

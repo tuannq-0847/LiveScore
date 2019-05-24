@@ -34,15 +34,11 @@ open class ScoresChildFragment : BaseFragment() {
         return inflater.inflate(layoutId, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun initComponents() {
         sharedViewModel = activity?.run {
             ViewModelProviders.of(this).get(SharedViewModel::class.java)
         } ?: throw Exception()
         sharedViewModel?.dateLiveData?.observe(this, ScoreObserver())
-    }
-
-    override fun initComponents() {
         doObserve()
     }
 
@@ -55,11 +51,13 @@ open class ScoresChildFragment : BaseFragment() {
         })
         scoreChildViewModel.matchLiveData.observe(this, Observer {
             val liveEventFragment = LiveEventFragment.newInstance(it)
-            activity?.supportFragmentManager
-                ?.beginTransaction()
-                ?.add(R.id.layoutParent, liveEventFragment)
-                ?.addToBackStack(null)
-                ?.commit()
+            activity?.run {
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.layoutParent, liveEventFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
         })
     }
 
@@ -109,9 +107,7 @@ open class ScoresChildFragment : BaseFragment() {
         super.setUserVisibleHint(isVisibleToUser)
         showLoading(true)
         scoreHistoryAdapter?.clearData()
-        scoreHistoryAdapter?.notifyDataSetChanged()
         scoreFixtureAdapter?.clearData()
-        scoreFixtureAdapter?.notifyDataSetChanged()
     }
 
     private fun showError(message: String) {

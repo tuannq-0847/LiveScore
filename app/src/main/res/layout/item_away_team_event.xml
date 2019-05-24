@@ -28,14 +28,16 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textAwayPlayer"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_16"
-            android:ellipsize="start"
+            android:layout_marginStart="@dimen/dp_4"
+            android:ellipsize="end"
             android:singleLine="true"
             android:text="@{event.player}"
             android:textColor="@color/color_white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageEventAway"
             app:layout_constraintTop_toTopOf="@+id/imageEventAway" />
 
         <androidx.appcompat.widget.AppCompatImageView
