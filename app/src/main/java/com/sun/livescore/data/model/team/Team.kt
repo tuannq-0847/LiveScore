@@ -1,12 +1,17 @@
 package com.sun.livescore.data.model.team
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import javax.annotation.Nonnull
 
+@Entity(tableName = "team")
 data class Team(
     @SerializedName(NAME)
     var name: String? = null,
     @SerializedName(TEAM_ID)
-    var teamId: String? = null,
+    @PrimaryKey
+    @Nonnull var teamId: String,
     @SerializedName(LOGO)
     var logo: String? = null,
     @SerializedName(GLOBAL_TEAM_ID)

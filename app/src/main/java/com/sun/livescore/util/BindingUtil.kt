@@ -20,7 +20,7 @@ fun AppCompatImageView.handleLiveEvent(event: Event) {
 fun AppCompatImageView.showEnsign(logoLink: String?) {
     Glide.with(context)
         .load(logoLink)
-        .placeholder(R.drawable.ic_launcher_background)
+        .placeholder(R.drawable.ic_football)
         .into(this)
 }
 

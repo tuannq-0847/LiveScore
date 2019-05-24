@@ -9,6 +9,10 @@
             name="team"
             type="com.sun.livescore.data.model.team.Team" />
 
+        <variable
+            name="viewModel"
+            type="com.sun.livescore.ui.favorite.FavoriteViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,6 +48,7 @@
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
             android:layout_marginEnd="@dimen/dp_16"
+            android:onClick="@{() -> viewModel.onListenerFollowClub(team)}"
             android:src="@drawable/ic_notifications_black_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageEnsignClub"
             app:layout_constraintEnd_toEndOf="parent"
