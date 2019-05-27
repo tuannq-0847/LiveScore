@@ -2,6 +2,7 @@ package com.sun.livescore.util
 
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.sun.livescore.R
 import com.sun.livescore.data.model.event.Event
 
@@ -13,6 +14,14 @@ fun AppCompatImageView.handleLiveEvent(event: Event) {
         YELLOW_RED_CARD -> setBackgroundResource(R.drawable.double_yellow)
         YELLOW_CARD -> setBackgroundResource(R.drawable.ic_yellow_card)
     }
+}
+
+@BindingAdapter("showEnsignClub")
+fun AppCompatImageView.showEnsign(logoLink: String?) {
+    Glide.with(context)
+        .load(logoLink)
+        .placeholder(R.drawable.ic_launcher_background)
+        .into(this)
 }
 
 const val GOAL = "GOAL"

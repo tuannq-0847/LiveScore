@@ -28,7 +28,11 @@ class LiveScoreViewModel(private val repository: ScoreRepository) : BaseViewMode
                     } as List<History>
                 }
                 .subscribe({
-                    _liveScoreLiveData.value = ApiResponse.success(it)
+                    when {
+                        it.isNullOrEmpty() -> emptyLiveData.value = true
+                        else -> _liveScoreLiveData.value = ApiResponse.success(it)
+                    }
+
                 }, {
                     _liveScoreLiveData.value = ApiResponse.error(it.message.toString())
                 })

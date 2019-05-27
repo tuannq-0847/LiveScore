@@ -1,6 +1,7 @@
 package com.sun.livescore.ui.scores.child
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.sun.livescore.R
@@ -11,6 +12,7 @@ import com.sun.livescore.ui.base.BaseViewHolder
 import com.sun.livescore.ui.scores.child.ScoreHistoryAdapter.HistoryViewHolder
 import com.sun.livescore.util.Constant
 import com.sun.livescore.util.Util
+import kotlinx.android.synthetic.main.item_match_score.view.textNameLeague
 
 class ScoreHistoryAdapter(
     private var histories: List<History>,
@@ -48,7 +50,11 @@ class ScoreHistoryAdapter(
                 scoreHomeTeam = scores[Constant.FIRST_SCORE_INDEX]
                 scoreAwayTeam = scores[Constant.SECOND_SCORE_INDEX]
                 timeHistory = data.time
+                itemView.textNameLeague.visibility = if (checkSameLeague(position)) View.GONE else View.VISIBLE
             }
         }
+
+        private fun checkSameLeague(position: Int): Boolean =
+            (position + 1 < histories.size && histories[position].leagueId == histories[position + 1].leagueId)
     }
 }

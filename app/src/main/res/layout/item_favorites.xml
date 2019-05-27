@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="team"
+            type="com.sun.livescore.data.model.team.Team" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@color/color_background">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageEnsignClub"
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_55"
+            android:layout_marginStart="@dimen/dp_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:showEnsignClub="@{team.logo}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textNameClub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:text="@{team.name}"
+            android:textColor="@color/color_white"
+            app:layout_constraintBottom_toBottomOf="@+id/imageEnsignClub"
+            app:layout_constraintStart_toEndOf="@+id/imageEnsignClub"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginStart="@dimen/dp_8" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageNotification"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:src="@drawable/ic_notifications_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageEnsignClub"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageEnsignClub" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_8"
+            android:background="@color/color_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageEnsignClub" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
