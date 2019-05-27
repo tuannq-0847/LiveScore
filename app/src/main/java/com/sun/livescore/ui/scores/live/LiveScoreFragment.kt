@@ -22,12 +22,19 @@ class LiveScoreFragment : BaseFragment() {
 
     override fun initComponents() {
         liveScoreViewModel.getLiveScore()
+        checkIsEmpty()
         liveScoreViewModel.liveScoreLiveData.observe(this, Observer {
             when (it.status) {
                 SUCCESS -> showSuccess(it.data)
                 ERROR -> showError(it.message)
                 LOADING -> showLoading(true)
             }
+        })
+    }
+
+    private fun checkIsEmpty() {
+        liveScoreViewModel.emptyLiveData.observe(this, Observer {
+            imageEmptyChild.visibility = View.VISIBLE
         })
     }
 
@@ -38,7 +45,7 @@ class LiveScoreFragment : BaseFragment() {
 
     private fun loadDataToView(data: List<History>?) {
         data?.let {
-            imageEmptyChild.visibility = liveScoreViewModel.showVisible(liveScoreViewModel.eventIsEmpty(it))
+
             val adapter = LiveScoreAdapter(it)
             recyclerScores.adapter = adapter
             recyclerScores.layoutManager = LinearLayoutManager(context)

@@ -55,7 +55,10 @@ class CountryViewModel(private val repository: CountryRepository) : BaseViewMode
                 }
             }
             .subscribe({
-                _countriesSearchLiveData.value = ApiResponse.success(it)
+                when {
+                    it.isNullOrEmpty() -> emptyLiveData.value = true
+                    else -> _countriesSearchLiveData.value = ApiResponse.success(it)
+                }
             }, {
                 _countriesSearchLiveData.value = ApiResponse.error(it.message.toString())
             })

@@ -37,6 +37,7 @@ class CountryFragment : BaseFragment(), OnQueryTextListener {
 
     override fun initComponents() {
         countryViewModel.getLeagueCountry()
+        checkEmpty()
         countryViewModel.countriesLiveData.observe(this, Observer {
             handleLeaguesResponse(it)
         })
@@ -50,6 +51,12 @@ class CountryFragment : BaseFragment(), OnQueryTextListener {
                 ?.add(R.id.layoutParent, leagueFragment)
                 ?.addToBackStack(null)
                 ?.commit()
+        })
+    }
+
+    private fun checkEmpty() {
+        countryViewModel.emptyLiveData.observe(this, Observer {
+            imageEmptyLeagues.visibility = View.VISIBLE
         })
     }
 
@@ -67,10 +74,7 @@ class CountryFragment : BaseFragment(), OnQueryTextListener {
     }
 
     private fun displaySearchResult(data: List<Country>?) {
-        val adapter = data?.let {
-            imageEmptyLeagues.visibility = countryViewModel.showVisible(countryViewModel.eventIsEmpty(it))
-            CountryAdapter(it, countryViewModel)
-        }
+        val adapter = data?.let { CountryAdapter(it, countryViewModel) }
         recyclerLeague.layoutManager = LinearLayoutManager(context)
         recyclerLeague.adapter = adapter
     }
