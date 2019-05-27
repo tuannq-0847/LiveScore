@@ -1,6 +1,7 @@
 package com.sun.livescore.util
 
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import com.sun.livescore.R
 import com.sun.livescore.data.model.event.Event

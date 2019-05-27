@@ -39,6 +39,7 @@ class LiveEventFragment : BaseFragment() {
         fixture?.run {
             binding.fixture = this
             liveEventViewModel.getLiveEvents(this)
+            checkEmpty()
             if (this is History) {
                 binding.awayScore = Util.getScoreFromString(this.score)[Constant.SECOND_SCORE_INDEX]
                 binding.homeScore = Util.getScoreFromString(this.score)[Constant.FIRST_SCORE_INDEX]
@@ -47,6 +48,12 @@ class LiveEventFragment : BaseFragment() {
         doObserve()
 
         return binding.root
+    }
+
+    private fun checkEmpty() {
+        liveEventViewModel.emptyLiveData.observe(this, Observer {
+            imageEmpty.visibility = View.VISIBLE
+        })
     }
 
     private fun doObserve() {
@@ -70,7 +77,6 @@ class LiveEventFragment : BaseFragment() {
     private fun showSuccess(data: EventResponse?) {
         showLoading(false)
         data?.data?.events?.run {
-            imageEmpty.visibility = liveEventViewModel.showVisible(liveEventViewModel.eventIsEmpty(this))
             val adapter = LiveEventAdapter(this)
             recyclerLiveEvent.adapter = adapter
             recyclerLiveEvent.layoutManager = LinearLayoutManager(context)
