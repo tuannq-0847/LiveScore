@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sun.livescore.R
@@ -71,7 +73,12 @@ class CountryFragment : BaseFragment(), OnQueryTextListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchLeagues.setOnQueryTextListener(this)
+        val editText = searchLeagues.findViewById<AutoCompleteTextView>(R.id.search_src_text)
+        context?.let {
+            editText.setHintTextColor(ContextCompat.getColor(it, R.color.color_white))
+            editText.setTextColor(ContextCompat.getColor(it, R.color.color_white))
+            searchLeagues.setOnQueryTextListener(this)
+        }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

@@ -1,104 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_background">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="fixture"
+            type="com.sun.livescore.data.model.score.fixture.Fixture" />
+
+        <variable
+            name="homeScore"
+            type="String" />
+
+        <variable
+            name="awayScore"
+            type="String" />
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutInformation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/color_gray"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerLiveEvent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageEnsignLive"
-            android:layout_width="@dimen/dp_55"
-            android:layout_height="@dimen/dp_25"
-            android:layout_marginStart="@dimen/dp_16"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutInformation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/color_gray"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerLiveEvent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageEnsignLive"
+                android:layout_width="@dimen/dp_55"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginStart="@dimen/dp_16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textNameLeagueLive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_4"
+                android:textColor="@color/color_white"
+                app:layout_constraintStart_toEndOf="@+id/imageEnsignLive"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textFt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/feature"
+                android:textColor="@color/color_white"
+                app:layout_constraintEnd_toEndOf="@+id/imageEnsignLive"
+                app:layout_constraintTop_toBottomOf="@+id/textHomeNameLive" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textHomeNameLive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_4"
+                android:text="@{fixture.homeTeamName}"
+                android:textColor="@color/color_white"
+                app:layout_constraintStart_toEndOf="@+id/textFt"
+                app:layout_constraintTop_toBottomOf="@+id/imageEnsignLive" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textAwayNameLive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_4"
+                android:paddingBottom="@dimen/dp_8"
+                android:text="@{fixture.awayTeamName}"
+                android:textColor="@color/color_white"
+                app:layout_constraintStart_toEndOf="@+id/textFt"
+                app:layout_constraintTop_toBottomOf="@+id/textFt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textHomeScoreLive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:text="@{homeScore}"
+                android:textColor="@color/color_yellow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textHomeNameLive" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textAwayScoreLive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:text="@{awayScore}"
+                android:textColor="@color/color_yellow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textAwayNameLive" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerLiveEvent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutInformation" />
+
+        <ProgressBar
+            android:id="@+id/progressLiveEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/color_background"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textNameLeagueLive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_4"
-            android:textColor="@color/color_white"
-            app:layout_constraintStart_toEndOf="@+id/imageEnsignLive"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textFt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/feature"
-            android:textColor="@color/color_white"
-            app:layout_constraintEnd_toEndOf="@+id/imageEnsignLive"
-            app:layout_constraintTop_toBottomOf="@+id/textHomeNameLive" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textHomeNameLive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_4"
-            android:textColor="@color/color_white"
-            app:layout_constraintStart_toEndOf="@+id/textFt"
-            app:layout_constraintTop_toBottomOf="@+id/imageEnsignLive" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textAwayNameLive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_4"
-            android:paddingBottom="@dimen/dp_8"
-            android:textColor="@color/color_white"
-            app:layout_constraintStart_toEndOf="@+id/textFt"
-            app:layout_constraintTop_toBottomOf="@+id/textFt" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textHomeScoreLive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:textColor="@color/color_yellow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textHomeNameLive" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textAwayScoreLive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:textColor="@color/color_yellow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textAwayNameLive" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerLiveEvent"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutInformation" />
-
-    <ProgressBar
-        android:id="@+id/progressLiveEvent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/color_background"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

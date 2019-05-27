@@ -10,7 +10,10 @@ import com.sun.livescore.ui.base.BaseRecyclerAdapter
 import com.sun.livescore.ui.base.BaseViewHolder
 import com.sun.livescore.ui.scores.child.ScoreFixtureAdapter.FixtureViewHolder
 
-class ScoreFixtureAdapter(fixtures: List<Fixture>) :
+class ScoreFixtureAdapter(
+    private val fixtures: List<Fixture>,
+    private val scoreViewModel: ScoreChildViewModel
+) :
     BaseRecyclerAdapter<ItemMatchScoreBinding, Fixture, FixtureViewHolder>(fixtures) {
 
     override fun onCreateViewHolder(
@@ -24,6 +27,11 @@ class ScoreFixtureAdapter(fixtures: List<Fixture>) :
         )
     }
 
+    fun clearData() {
+        (fixtures as ArrayList).clear()
+        notifyDataSetChanged()
+    }
+
     override fun getLayoutRes(viewType: Int): Int = R.layout.item_match_score
 
     inner class FixtureViewHolder(binding: ItemMatchScoreBinding) :
@@ -32,6 +40,7 @@ class ScoreFixtureAdapter(fixtures: List<Fixture>) :
         override fun bindView(binding: ItemMatchScoreBinding, position: Int, data: Fixture) {
             binding.run {
                 isScore = true
+                viewModel = scoreViewModel
                 scoreFixture = data
                 data.time?.let { timeFixture = getTimeHourMin(it) }
             }

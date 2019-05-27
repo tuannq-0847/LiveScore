@@ -2,6 +2,7 @@ package com.sun.livescore.ui.scores.child
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.sun.livescore.data.model.score.fixture.Fixture
 import com.sun.livescore.data.model.score.fixture.FixtureResponse
 import com.sun.livescore.data.model.score.history.HistoryResponse
 import com.sun.livescore.data.remote.response.ApiResponse
@@ -16,6 +17,9 @@ import java.util.Locale
 class ScoreChildViewModel(private val repository: ScoreRepository) : BaseViewModel() {
     private val _scoreFixtureLiveData = MutableLiveData<ApiResponse<FixtureResponse>>()
     private val _scoreHistoryLiveData = MutableLiveData<ApiResponse<HistoryResponse>>()
+    private val _matchLiveData = MutableLiveData<Fixture>()
+    val matchLiveData: LiveData<Fixture>
+        get() = _matchLiveData
     val scoreFixtureLiveData: LiveData<ApiResponse<FixtureResponse>>
         get() = _scoreFixtureLiveData
     val scoreHistoryLiveData: LiveData<ApiResponse<HistoryResponse>>
@@ -66,6 +70,10 @@ class ScoreChildViewModel(private val repository: ScoreRepository) : BaseViewMod
         val currentDateTime = System.currentTimeMillis()
         val simpleDateFormat = SimpleDateFormat(dateFormatSyntax, Locale.US)
         return simpleDateFormat.format(currentDateTime)
+    }
+
+    fun onMatchClick(fixture: Fixture) {
+        _matchLiveData.value = fixture
     }
 
     private fun getFinalDate(date: String, currentDate: String): String {
