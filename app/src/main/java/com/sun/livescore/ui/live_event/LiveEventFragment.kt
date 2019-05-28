@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sun.livescore.R
 import com.sun.livescore.data.model.EnumStatus.ERROR
 import com.sun.livescore.data.model.EnumStatus.LOADING
 import com.sun.livescore.data.model.EnumStatus.SUCCESS
-import com.sun.livescore.data.model.event.Event
 import com.sun.livescore.data.model.event.EventResponse
 import com.sun.livescore.data.model.score.fixture.Fixture
 import com.sun.livescore.data.model.score.history.History
@@ -21,6 +18,7 @@ import com.sun.livescore.ui.base.BaseFragment
 import com.sun.livescore.util.Constant
 import com.sun.livescore.util.ContextExtension.showMessage
 import com.sun.livescore.util.Util
+import kotlinx.android.synthetic.main.fragment_live_event.imageEmpty
 import kotlinx.android.synthetic.main.fragment_live_event.progressLiveEvent
 import kotlinx.android.synthetic.main.fragment_live_event.recyclerLiveEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -51,7 +49,6 @@ class LiveEventFragment : BaseFragment() {
         return binding.root
     }
 
-
     private fun doObserve() {
         liveEventViewModel.liveEventLiveData.observe(this, Observer {
             when (it.status) {
@@ -73,6 +70,7 @@ class LiveEventFragment : BaseFragment() {
     private fun showSuccess(data: EventResponse?) {
         showLoading(false)
         data?.data?.events?.run {
+            imageEmpty.visibility = liveEventViewModel.showVisible(liveEventViewModel.eventIsEmpty(this))
             val adapter = LiveEventAdapter(this)
             recyclerLiveEvent.adapter = adapter
             recyclerLiveEvent.layoutManager = LinearLayoutManager(context)

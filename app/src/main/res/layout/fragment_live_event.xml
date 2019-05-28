@@ -33,47 +33,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageEnsignLive"
-                android:layout_width="@dimen/dp_55"
-                android:layout_height="@dimen/dp_25"
-                android:layout_marginStart="@dimen/dp_16"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textNameLeagueLive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_4"
+                android:layout_marginStart="@dimen/dp_16"
+                android:text="@{fixture.leagueName}"
                 android:textColor="@color/color_white"
-                app:layout_constraintStart_toEndOf="@+id/imageEnsignLive"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textFt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
                 android:text="@string/feature"
                 android:textColor="@color/color_white"
-                app:layout_constraintEnd_toEndOf="@+id/imageEnsignLive"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textHomeNameLive" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textHomeNameLive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_4"
                 android:text="@{fixture.homeTeamName}"
                 android:textColor="@color/color_white"
                 app:layout_constraintStart_toEndOf="@+id/textFt"
-                app:layout_constraintTop_toBottomOf="@+id/imageEnsignLive" />
+                app:layout_constraintTop_toBottomOf="@+id/textNameLeagueLive" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textAwayNameLive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_4"
                 android:paddingBottom="@dimen/dp_8"
                 android:text="@{fixture.awayTeamName}"
                 android:textColor="@color/color_white"
@@ -122,6 +115,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageEmpty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/empty"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutInformation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

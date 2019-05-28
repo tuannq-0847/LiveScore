@@ -3,7 +3,6 @@ package com.sun.livescore.ui.leagues
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sun.livescore.data.model.league.League
-import com.sun.livescore.data.model.league.LeagueResponse
 import com.sun.livescore.data.remote.response.ApiResponse
 import com.sun.livescore.data.repository.LeagueRepository
 import com.sun.livescore.ui.base.BaseViewModel
@@ -11,8 +10,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class LeagueViewModel(private val repository: LeagueRepository) : BaseViewModel() {
-    private val _leagueLiveData = MutableLiveData<ApiResponse<LeagueResponse>>()
-    val leagueLiveData: LiveData<ApiResponse<LeagueResponse>>
+    private val _leagueLiveData = MutableLiveData<ApiResponse<List<League>>>()
+    val leagueLiveData: LiveData<ApiResponse<List<League>>>
         get() = _leagueLiveData
 
     private val _leagueListenerLiveData = MutableLiveData<League>()
@@ -31,8 +30,14 @@ class LeagueViewModel(private val repository: LeagueRepository) : BaseViewModel(
                 .doOnSubscribe {
                     _leagueLiveData.value = ApiResponse.loading()
                 }
+                .map {
+                    it.data?.leagues
+                }
                 .subscribe({
-                    _leagueLiveData.value = ApiResponse.success(it)
+                    when {
+                        it.isNullOrEmpty() -> emptyLiveData.value = true
+                        else -> _leagueLiveData.value = ApiResponse.success(it)
+                    }
                 }, {
                     _leagueLiveData.value = ApiResponse.error(it.message.toString())
                 })

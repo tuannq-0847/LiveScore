@@ -9,10 +9,11 @@ import com.sun.livescore.data.model.EnumStatus.ERROR
 import com.sun.livescore.data.model.EnumStatus.LOADING
 import com.sun.livescore.data.model.EnumStatus.SUCCESS
 import com.sun.livescore.data.model.country.Country
-import com.sun.livescore.data.model.league.LeagueResponse
+import com.sun.livescore.data.model.league.League
 import com.sun.livescore.ui.base.BaseFragment
 import com.sun.livescore.ui.standing.StandingFragment
 import com.sun.livescore.util.ContextExtension.showMessage
+import kotlinx.android.synthetic.main.fragment_leagues_in_country.imageEmptyCountry
 import kotlinx.android.synthetic.main.fragment_leagues_in_country.progressLeagues
 import kotlinx.android.synthetic.main.fragment_leagues_in_country.recyclerLeagues
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,6 +28,7 @@ class LeagueFragment : BaseFragment() {
         country?.leagueLink?.let {
             leagueViewModel.getLeagues(splitLinkLeagues(it))
         }
+        checkIsEmpty()
         leagueViewModel.leagueLiveData.observe(this, Observer {
             when (it.status) {
                 ERROR -> showError(it.message)
@@ -35,6 +37,12 @@ class LeagueFragment : BaseFragment() {
             }
         })
         receiveObserve()
+    }
+
+    private fun checkIsEmpty() {
+        leagueViewModel.emptyLiveData.observe(this, Observer {
+            imageEmptyCountry.visibility = View.VISIBLE
+        })
     }
 
     private fun receiveObserve() {
@@ -48,13 +56,13 @@ class LeagueFragment : BaseFragment() {
         })
     }
 
-    private fun showSuccess(data: LeagueResponse?) {
+    private fun showSuccess(data: List<League>?) {
         showLoading(false)
         displayLeaguesToView(data)
     }
 
-    private fun displayLeaguesToView(data: LeagueResponse?) {
-        data?.data?.leagues?.let {
+    private fun displayLeaguesToView(data: List<League>?) {
+        data?.let {
             val adapter = LeagueAdapter(it, leagueViewModel)
             recyclerLeagues.adapter = adapter
             recyclerLeagues.layoutManager = LinearLayoutManager(context)

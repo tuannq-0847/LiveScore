@@ -23,7 +23,7 @@ import org.koin.dsl.module
 val appModule = module {
     viewModel { ScoreViewModel() }
     viewModel { CountryViewModel(get()) }
-    viewModel { ScoreChildViewModel(get()) }
+    viewModel { ScoreChildViewModel(get(), get()) }
     viewModel { LeagueViewModel(get()) }
     viewModel { StandingViewModel(get()) }
     viewModel { LiveScoreViewModel(get()) }

@@ -32,6 +32,9 @@ interface ApiService {
     @GET(API_GET_EVENTS)
     fun getEvents(@Query(ID_MATCH) id: String): Single<EventResponse>
 
+    @GET(API_GET_LEAGUES)
+    fun getAllLeagues(): Single<LeagueResponse>
+
     companion object {
 
         const val API_GET_FIXTURES = "api-client/fixtures/matches.json"
@@ -44,8 +47,6 @@ interface ApiService {
         const val COUNTRY = "country"
         const val LEAGUE = "league"
         const val SEASON = "season"
-        const val KEY = "key"
-        const val SECRET = "secret"
         const val DATE = "date"
         const val FROM = "from"
         const val TO = "to"
