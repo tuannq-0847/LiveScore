@@ -30,7 +30,6 @@ android {
         }
     }
 
-
     androidExtensions {
         experimental = true
     }
@@ -39,6 +38,7 @@ android {
         enabled = true
     }
 
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
@@ -49,6 +49,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.github.humazed:RoomAsset:1.0.3'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     kapt 'com.android.databinding:compiler:3.1.4'
@@ -64,9 +65,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation "io.reactivex.rxjava2:rxjava:2.2.8"
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
     implementation "androidx.room:room-guava:$room_version"

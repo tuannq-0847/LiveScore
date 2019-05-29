@@ -1,12 +1,17 @@
 package com.sun.livescore.data.model.team
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.sun.livescore.data.model.team.Team.Companion.TABLE_NAME
 
+@Entity(tableName = TABLE_NAME)
 data class Team(
     @SerializedName(NAME)
     var name: String? = null,
     @SerializedName(TEAM_ID)
-    var teamId: String? = null,
+    @PrimaryKey
+    var teamId: String,
     @SerializedName(LOGO)
     var logo: String? = null,
     @SerializedName(GLOBAL_TEAM_ID)
@@ -20,6 +25,7 @@ data class Team(
 ) {
 
     companion object {
+        const val TABLE_NAME = "team"
         const val NAME = "Name"
         const val TEAM_ID = "TeamId"
         const val LOGO = "WikipediaLogoUrl"
