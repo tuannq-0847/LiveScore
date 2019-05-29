@@ -48,7 +48,7 @@
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
             android:layout_marginEnd="@dimen/dp_16"
-            android:onClick="@{() -> viewModel.onListenerFollowClub(team)}"
+            android:onClick="@{() -> viewModel.saveFavoriteTeam(team)}"
             android:src="@drawable/ic_notifications_black_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageEnsignClub"
             app:layout_constraintEnd_toEndOf="parent"

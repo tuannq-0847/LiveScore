@@ -22,7 +22,7 @@ class FavoriteAdapter(teams: List<Team>, private val favViewModel: FavoriteViewM
         )
     }
 
-    override fun getLayoutRes(viewType: Int): Int = R.layout.item_favorites
+    override fun getLayoutRes(viewType: Int) = R.layout.item_favorites
 
     inner class FavViewHolder(binding: ItemFavoritesBinding) : BaseViewHolder<ItemFavoritesBinding, Team>(binding) {
         override fun bindView(binding: ItemFavoritesBinding, position: Int, data: Team) {

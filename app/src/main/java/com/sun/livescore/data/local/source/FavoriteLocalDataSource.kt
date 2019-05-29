@@ -6,7 +6,9 @@ import com.sun.livescore.data.model.team.Team
 import io.reactivex.Single
 
 class FavoriteLocalDataSource(private val teamDao: TeamDao) : TeamDataSource.Local {
-    override fun getAllTeams(): Single<List<Team>> = teamDao.getAllTeams()
+    override fun queryTeams(query: String?): Single<List<Team>> = teamDao.queryTeam(query)
 
-    override fun saveFavTeam(team: Team) = teamDao.insertTeamFav(team)
+    override fun getTeams(): Single<List<Team>> = teamDao.getTeams()
+
+    override fun saveFavoriteTeam(team: Team) = teamDao.insertFavoriteTeam(team)
 }

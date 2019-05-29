@@ -6,10 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import com.sun.livescore.data.model.EnumStatus.ERROR
-import com.sun.livescore.data.model.EnumStatus.LOADING
-import com.sun.livescore.data.model.EnumStatus.SUCCESS
-import com.sun.livescore.data.remote.response.ApiResponse
 
 abstract class BaseFragment : Fragment() {
 

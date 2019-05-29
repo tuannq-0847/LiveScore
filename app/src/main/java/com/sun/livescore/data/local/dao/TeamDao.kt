@@ -11,11 +11,18 @@ import io.reactivex.Single
 abstract class TeamDao {
 
     @Insert
-    abstract fun insertTeamFav(team: Team)
+    abstract fun insertFavoriteTeam(team: Team)
 
     @Delete
     abstract fun delete(team: Team)
 
-    @Query("select * from team")
-    abstract fun getAllTeams(): Single<List<Team>>
+    @Query("select * from $TEAM")
+    abstract fun getTeams(): Single<List<Team>>
+
+    @Query("select * from $TEAM where name like '%' || :query || '%'")
+    abstract fun queryTeam(query: String?): Single<List<Team>>
+
+    companion object {
+        const val TEAM = "team"
+    }
 }

@@ -21,8 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class FavoriteFragment : BaseFragment(), OnQueryTextListener {
 
     private val viewModel: FavoriteViewModel by viewModel()
-    override val layoutId: Int
-        get() = R.layout.fragment_favorite
+    override val layoutId = R.layout.fragment_favorite
 
     override fun initComponents() {
         viewModel.getFavorites()
@@ -63,7 +62,7 @@ class FavoriteFragment : BaseFragment(), OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         newText?.let {
-            viewModel.searchLeaguesByName(newText)
+            viewModel.searchTeamsByName(newText)
         }
         return true
     }

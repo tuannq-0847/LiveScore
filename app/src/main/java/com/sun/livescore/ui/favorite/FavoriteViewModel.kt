@@ -12,69 +12,56 @@ import io.reactivex.schedulers.Schedulers
 
 class FavoriteViewModel(
     private val favoriteLocalRepository: FavoriteLocalRepository
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
 
-    private val _favLiveData = MutableLiveData<ApiResponse<List<Team>>>()
+    private val _favoriteTeams = MutableLiveData<ApiResponse<List<Team>>>()
     val favLiveData: LiveData<ApiResponse<List<Team>>>
-        get() = _favLiveData
-    private val _dbLiveData = MutableLiveData<ApiResponse<Boolean>>()
+        get() = _favoriteTeams
+    private val _databaseLiveData = MutableLiveData<ApiResponse<Boolean>>()
     val dbLiveData: LiveData<ApiResponse<Boolean>>
-        get() = _dbLiveData
+        get() = _databaseLiveData
 
     fun getFavorites() {
         compositeDisposable.add(
-            favoriteLocalRepository.getAllTeams()
+            favoriteLocalRepository.getTeams()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe {
-                    _favLiveData.value = ApiResponse.loading()
+                    _favoriteTeams.value = ApiResponse.loading()
                 }
                 .subscribe({
-                    _favLiveData.value = ApiResponse.success(it)
+                    _favoriteTeams.value = ApiResponse.success(it)
                 }, {
-                    _favLiveData.value = ApiResponse.error(it.message.toString())
+                    _favoriteTeams.value = ApiResponse.error(it.message.toString())
                 })
         )
     }
 
-    fun searchLeaguesByName(query: String?) {
-        compositeDisposable.add(favoriteLocalRepository.getAllTeams()
+    fun searchTeamsByName(query: String?) {
+        compositeDisposable.add(favoriteLocalRepository.queryTeams(query)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .doOnSubscribe {
-                _favLiveData.value = ApiResponse.loading()
-            }
-            .map {
-                query?.let { query ->
-                    it.filter { team ->
-                        if (team.name != null) {
-                            team.name!!.toLowerCase().contains(query.toLowerCase())
-                        } else {
-                            false
-                        }
-
-                    }
-                }
+                _favoriteTeams.value = ApiResponse.loading()
             }
             .subscribe({
-                _favLiveData.value = ApiResponse.success(it)
+                _favoriteTeams.value = ApiResponse.success(it)
             }, {
-                _favLiveData.value = ApiResponse.error(it.message.toString())
+                _favoriteTeams.value = ApiResponse.error(it.message.toString())
             })
         )
     }
 
-    fun onListenerFollowClub(team: Team) {
+    fun saveFavoriteTeam(team: Team) {
         compositeDisposable.add(
             Completable.fromAction {
-                favoriteLocalRepository.saveFavTeam(team)
+                favoriteLocalRepository.saveFavoriteTeam(team)
             }.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    _dbLiveData.value = ApiResponse.success(true)
+                    _databaseLiveData.value = ApiResponse.success(true)
                 }, {
-                    _dbLiveData.value = ApiResponse.error(it.message.toString())
+                    _databaseLiveData.value = ApiResponse.error(it.message.toString())
                 })
         )
     }
