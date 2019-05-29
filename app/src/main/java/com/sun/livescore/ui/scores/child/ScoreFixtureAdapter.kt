@@ -1,6 +1,7 @@
 package com.sun.livescore.ui.scores.child
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.sun.livescore.R
@@ -9,6 +10,7 @@ import com.sun.livescore.databinding.ItemMatchScoreBinding
 import com.sun.livescore.ui.base.BaseRecyclerAdapter
 import com.sun.livescore.ui.base.BaseViewHolder
 import com.sun.livescore.ui.scores.child.ScoreFixtureAdapter.FixtureViewHolder
+import kotlinx.android.synthetic.main.item_match_score.view.textNameLeague
 
 class ScoreFixtureAdapter(
     private val fixtures: List<Fixture>,
@@ -43,8 +45,12 @@ class ScoreFixtureAdapter(
                 viewModel = scoreViewModel
                 scoreFixture = data
                 data.time?.let { timeFixture = getTimeHourMin(it) }
+                itemView.textNameLeague.visibility = if (checkSameLeague(position)) View.GONE else View.VISIBLE
             }
         }
+
+        private fun checkSameLeague(position: Int): Boolean =
+            (position + 1 < fixtures.size && fixtures[position].leagueId == fixtures[position + 1].leagueId)
     }
 
     private fun getTimeHourMin(time: String): String? {

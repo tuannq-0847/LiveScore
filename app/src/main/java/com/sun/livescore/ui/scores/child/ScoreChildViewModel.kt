@@ -54,7 +54,10 @@ class ScoreChildViewModel(private val repository: ScoreRepository, private val l
                     _scoreFixtureLiveData.value = ApiResponse.loading()
                 }
                 .subscribe({
-                    _scoreFixtureLiveData.value = ApiResponse.success(it)
+                    when {
+                        it.isNullOrEmpty() -> emptyLiveData.value = true
+                        else -> _scoreFixtureLiveData.value = ApiResponse.success(it)
+                    }
                 }, {
                     _scoreFixtureLiveData.value = ApiResponse.error(it.message.toString())
                 })
@@ -74,7 +77,10 @@ class ScoreChildViewModel(private val repository: ScoreRepository, private val l
                     _scoreHistoryLiveData.value = ApiResponse.loading()
                 }
                 .subscribe({
-                    _scoreHistoryLiveData.value = ApiResponse.success(it)
+                    when {
+                        it.isNullOrEmpty() -> emptyLiveData.value = true
+                        else -> _scoreHistoryLiveData.value = ApiResponse.success(it)
+                    }
                 }, {
                     _scoreHistoryLiveData.value = ApiResponse.error(it.message.toString())
                 })

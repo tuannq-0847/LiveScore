@@ -91,7 +91,6 @@ open class ScoresChildFragment : BaseFragment() {
         data?.let {
             scoreHistoryAdapter = ScoreHistoryAdapter(it, scoreChildViewModel)
             recyclerScores.layoutManager = LinearLayoutManager(context)
-            scoreHistoryAdapter!!.notifyDataSetChanged()
             recyclerScores.adapter = scoreHistoryAdapter
         }
     }

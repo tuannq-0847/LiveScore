@@ -10,7 +10,7 @@ import com.sun.livescore.R
 import com.sun.livescore.data.model.EnumStatus.ERROR
 import com.sun.livescore.data.model.EnumStatus.LOADING
 import com.sun.livescore.data.model.EnumStatus.SUCCESS
-import com.sun.livescore.data.model.event.EventResponse
+import com.sun.livescore.data.model.event.Event
 import com.sun.livescore.data.model.score.fixture.Fixture
 import com.sun.livescore.data.model.score.history.History
 import com.sun.livescore.databinding.FragmentLiveEventBinding
@@ -39,6 +39,7 @@ class LiveEventFragment : BaseFragment() {
         fixture?.run {
             binding.fixture = this
             liveEventViewModel.getLiveEvents(this)
+            checkEmpty()
             if (this is History) {
                 binding.awayScore = Util.getScoreFromString(this.score)[Constant.SECOND_SCORE_INDEX]
                 binding.homeScore = Util.getScoreFromString(this.score)[Constant.FIRST_SCORE_INDEX]
@@ -47,6 +48,12 @@ class LiveEventFragment : BaseFragment() {
         doObserve()
 
         return binding.root
+    }
+
+    private fun checkEmpty() {
+        liveEventViewModel.emptyLiveData.observe(this, Observer {
+            imageEmpty.visibility = View.VISIBLE
+        })
     }
 
     private fun doObserve() {
@@ -67,10 +74,9 @@ class LiveEventFragment : BaseFragment() {
         context?.showMessage(message)
     }
 
-    private fun showSuccess(data: EventResponse?) {
+    private fun showSuccess(data: List<Event>?) {
         showLoading(false)
-        data?.data?.events?.run {
-            imageEmpty.visibility = liveEventViewModel.showVisible(liveEventViewModel.eventIsEmpty(this))
+        data?.run {
             val adapter = LiveEventAdapter(this)
             recyclerLiveEvent.adapter = adapter
             recyclerLiveEvent.layoutManager = LinearLayoutManager(context)
