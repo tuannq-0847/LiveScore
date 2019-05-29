@@ -48,7 +48,12 @@ class FavoriteViewModel(
             .map {
                 query?.let { query ->
                     it.filter { team ->
-                        team.name!!.toLowerCase().contains(query.toLowerCase())
+                        if (team.name != null) {
+                            team.name!!.toLowerCase().contains(query.toLowerCase())
+                        } else {
+                            false
+                        }
+
                     }
                 }
             }
@@ -63,7 +68,7 @@ class FavoriteViewModel(
     fun onListenerFollowClub(team: Team) {
         compositeDisposable.add(
             Completable.fromAction {
-                favoriteLocalRepository.onSaveFavTeams(team)
+                favoriteLocalRepository.saveFavTeam(team)
             }.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({

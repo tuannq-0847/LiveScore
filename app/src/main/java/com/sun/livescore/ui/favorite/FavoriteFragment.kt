@@ -45,7 +45,7 @@ class FavoriteFragment : BaseFragment(), OnQueryTextListener {
     private fun observeFav() {
         viewModel.dbLiveData.observe(this, Observer {
             when (it.status) {
-                SUCCESS -> showInsertSuccess(it.data)
+                SUCCESS -> showInsertSuccess()
                 ERROR -> showError(it.message)
                 LOADING -> {
                 }
@@ -53,8 +53,8 @@ class FavoriteFragment : BaseFragment(), OnQueryTextListener {
         })
     }
 
-    private fun showInsertSuccess(data: Boolean?) {
-        context?.showMessage(SUCCESSFULLY)
+    private fun showInsertSuccess() {
+        context?.showMessage(resources.getString(R.string.successfully))
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -83,9 +83,5 @@ class FavoriteFragment : BaseFragment(), OnQueryTextListener {
             recyclerFavorites.layoutManager = LinearLayoutManager(context)
             recyclerFavorites.adapter = adapter
         }
-    }
-
-    companion object {
-        const val SUCCESSFULLY = "Followed Successfully"
     }
 }

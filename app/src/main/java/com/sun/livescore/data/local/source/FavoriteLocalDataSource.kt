@@ -8,5 +8,5 @@ import io.reactivex.Single
 class FavoriteLocalDataSource(private val teamDao: TeamDao) : TeamDataSource.Local {
     override fun getAllTeams(): Single<List<Team>> = teamDao.getAllTeams()
 
-    override fun onSaveFavTeams(team: Team) = teamDao.insertTeamFav(team)
+    override fun saveFavTeam(team: Team) = teamDao.insertTeamFav(team)
 }

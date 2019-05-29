@@ -11,7 +11,7 @@ data class Team(
     var name: String? = null,
     @SerializedName(TEAM_ID)
     @PrimaryKey
-    @Nonnull var teamId: String,
+    var teamId: String,
     @SerializedName(LOGO)
     var logo: String? = null,
     @SerializedName(GLOBAL_TEAM_ID)
