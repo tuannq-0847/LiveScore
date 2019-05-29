@@ -2,7 +2,6 @@ package com.sun.livescore.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
-import androidx.room.Insert
 import androidx.room.Query
 import com.sun.livescore.data.model.team.Team
 import io.reactivex.Single
@@ -10,8 +9,8 @@ import io.reactivex.Single
 @Dao
 abstract class TeamDao {
 
-    @Insert
-    abstract fun insertFavoriteTeam(team: Team)
+    @Query("update $TEAM set `key` = :key where teamId = :teamId")
+    abstract fun insertFavoriteTeam(teamId: String, key: String)
 
     @Delete
     abstract fun delete(team: Team)

@@ -10,5 +10,5 @@ class FavoriteLocalDataSource(private val teamDao: TeamDao) : TeamDataSource.Loc
 
     override fun getTeams(): Single<List<Team>> = teamDao.getTeams()
 
-    override fun saveFavoriteTeam(team: Team) = teamDao.insertFavoriteTeam(team)
+    override fun saveFavoriteTeam(teamId: String, key: String) = teamDao.insertFavoriteTeam(teamId, key)
 }

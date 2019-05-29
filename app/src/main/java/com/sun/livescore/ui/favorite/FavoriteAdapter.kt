@@ -11,7 +11,10 @@ import com.sun.livescore.ui.base.BaseViewHolder
 import com.sun.livescore.ui.favorite.FavoriteAdapter.FavViewHolder
 import kotlinx.android.synthetic.main.item_favorites.view.imageNotification
 
-class FavoriteAdapter(teams: List<Team>, private val favViewModel: FavoriteViewModel) :
+class FavoriteAdapter(
+    teams: List<Team>,
+    private val saveFavoriteTeamOnClick: (teamId: String, key: String) -> Unit
+) :
     BaseRecyclerAdapter<ItemFavoritesBinding, Team, FavViewHolder>(teams) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<ItemFavoritesBinding, Team> {
@@ -26,12 +29,44 @@ class FavoriteAdapter(teams: List<Team>, private val favViewModel: FavoriteViewM
 
     inner class FavViewHolder(binding: ItemFavoritesBinding) : BaseViewHolder<ItemFavoritesBinding, Team>(binding) {
         override fun bindView(binding: ItemFavoritesBinding, position: Int, data: Team) {
+            showIconFollow(data.key)
             itemView.imageNotification.run {
                 setOnClickListener {
+                    when (UNFOLLOW) {
+                        data.key -> {
+                            onSaveFavoriteTeam(data.teamId, FOLLOWED)
+                            data.key = FOLLOWED
+                        }
+                        else -> {
+                            onSaveFavoriteTeam(data.teamId, UNFOLLOW)
+                            data.key = UNFOLLOW
+                        }
+                    }
+                    notifyItemChanged(position)
                 }
             }
             binding.team = data
-            binding.viewModel = favViewModel
         }
+
+        private fun onSaveFavoriteTeam(teamId: String, key: String) {
+            saveFavoriteTeamOnClick(teamId, key)
+            showIconFollow(key)
+        }
+
+        private fun showIconFollow(key: String?) {
+            when (key) {
+                FOLLOWED -> {
+                    itemView.imageNotification?.setImageResource(R.drawable.ic_notifications_follow)
+                }
+                else -> {
+                    itemView.imageNotification?.setImageResource(R.drawable.ic_notifications_black_24dp)
+                }
+            }
+        }
+    }
+
+    companion object {
+        const val FOLLOWED = "1"
+        const val UNFOLLOW = "0"
     }
 }

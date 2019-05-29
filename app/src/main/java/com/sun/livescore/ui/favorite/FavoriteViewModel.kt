@@ -52,10 +52,10 @@ class FavoriteViewModel(
         )
     }
 
-    fun saveFavoriteTeam(team: Team) {
+    fun saveFavoriteTeam(teamId: String, key: String) {
         compositeDisposable.add(
             Completable.fromAction {
-                favoriteLocalRepository.saveFavoriteTeam(team)
+                favoriteLocalRepository.saveFavoriteTeam(teamId, key)
             }.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({

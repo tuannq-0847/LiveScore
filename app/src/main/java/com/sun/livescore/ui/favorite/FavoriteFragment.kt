@@ -78,9 +78,13 @@ class FavoriteFragment : BaseFragment(), OnQueryTextListener {
     private fun showSuccess(data: List<Team>?) {
         showLoading(false)
         data?.run {
-            val adapter = FavoriteAdapter(this, viewModel)
+            val adapter = FavoriteAdapter(this) { teamId, key -> saveFavoriteTeamOnClick(teamId, key) }
             recyclerFavorites.layoutManager = LinearLayoutManager(context)
             recyclerFavorites.adapter = adapter
         }
+    }
+
+    private fun saveFavoriteTeamOnClick(teamId: String, key: String) {
+        viewModel.saveFavoriteTeam(teamId, key)
     }
 }

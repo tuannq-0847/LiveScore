@@ -2,8 +2,8 @@ package com.sun.livescore.data.local
 
 import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.huma.room_for_asset.RoomAsset
 import com.sun.livescore.data.local.TeamDatabase.Companion.VERSION_DATABASE
 import com.sun.livescore.data.local.dao.TeamDao
 import com.sun.livescore.data.model.team.Team
@@ -24,7 +24,7 @@ abstract class TeamDatabase : RoomDatabase() {
         }
 
         private fun createDatabase(context: Context) =
-            RoomAsset.databaseBuilder(
+            Room.databaseBuilder(
                 context.applicationContext,
                 TeamDatabase::class.java, CLUB_FAV
             ).build()
