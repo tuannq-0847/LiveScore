@@ -52,10 +52,24 @@ class FavoriteViewModel(
         )
     }
 
-    fun saveFavoriteTeam(teamId: String, key: String) {
+    fun saveFavoriteTeam(teamId: String) {
         compositeDisposable.add(
             Completable.fromAction {
-                favoriteLocalRepository.saveFavoriteTeam(teamId, key)
+                favoriteLocalRepository.saveFavoriteTeam(teamId)
+            }.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    _databaseLiveData.value = ApiResponse.success(true)
+                }, {
+                    _databaseLiveData.value = ApiResponse.error(it.message.toString())
+                })
+        )
+    }
+
+    fun removeFavoriteTeam(teamId: String) {
+        compositeDisposable.add(
+            Completable.fromAction {
+                favoriteLocalRepository.removeFavoriteTeam(teamId)
             }.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({

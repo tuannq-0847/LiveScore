@@ -13,7 +13,8 @@ import kotlinx.android.synthetic.main.item_favorites.view.imageNotification
 
 class FavoriteAdapter(
     teams: List<Team>,
-    private val saveFavoriteTeamOnClick: (teamId: String, key: String) -> Unit
+    private val saveFavoriteTeamOnClick: (teamId: String) -> Unit,
+    private val removeFavoriteTeamOnClick: (teamId: String) -> Unit
 ) :
     BaseRecyclerAdapter<ItemFavoritesBinding, Team, FavViewHolder>(teams) {
 
@@ -28,18 +29,19 @@ class FavoriteAdapter(
     override fun getLayoutRes(viewType: Int) = R.layout.item_favorites
 
     inner class FavViewHolder(binding: ItemFavoritesBinding) : BaseViewHolder<ItemFavoritesBinding, Team>(binding) {
+
         override fun bindView(binding: ItemFavoritesBinding, position: Int, data: Team) {
-            showIconFollow(data.key)
+            checkStatusAndShowIcon(data.key)
             itemView.imageNotification.run {
                 setOnClickListener {
-                    when (UNFOLLOW) {
-                        data.key -> {
-                            onSaveFavoriteTeam(data.teamId, FOLLOWED)
+                    when (data.key) {
+                        null -> {
+                            onSaveFavoriteTeam(data.teamId)
                             data.key = FOLLOWED
                         }
                         else -> {
-                            onSaveFavoriteTeam(data.teamId, UNFOLLOW)
-                            data.key = UNFOLLOW
+                            onRemoveFavoriteTeam(data.teamId)
+                            data.key = null
                         }
                     }
                     notifyItemChanged(position)
@@ -48,25 +50,37 @@ class FavoriteAdapter(
             binding.team = data
         }
 
-        private fun onSaveFavoriteTeam(teamId: String, key: String) {
-            saveFavoriteTeamOnClick(teamId, key)
-            showIconFollow(key)
-        }
-
-        private fun showIconFollow(key: String?) {
+        private fun checkStatusAndShowIcon(key: String?) {
             when (key) {
                 FOLLOWED -> {
-                    itemView.imageNotification?.setImageResource(R.drawable.ic_notifications_follow)
+                    showIconFollow()
                 }
                 else -> {
-                    itemView.imageNotification?.setImageResource(R.drawable.ic_notifications_black_24dp)
+                    showIconUnFollow()
                 }
             }
+        }
+
+        private fun onSaveFavoriteTeam(teamId: String) {
+            saveFavoriteTeamOnClick(teamId)
+            showIconFollow()
+        }
+
+        private fun onRemoveFavoriteTeam(teamId: String) {
+            removeFavoriteTeamOnClick(teamId)
+            showIconUnFollow()
+        }
+
+        private fun showIconUnFollow() {
+            itemView.imageNotification?.setImageResource(R.drawable.ic_notifications_black_24dp)
+        }
+
+        private fun showIconFollow() {
+            itemView.imageNotification?.setImageResource(R.drawable.ic_notifications_follow)
         }
     }
 
     companion object {
         const val FOLLOWED = "1"
-        const val UNFOLLOW = "0"
     }
 }

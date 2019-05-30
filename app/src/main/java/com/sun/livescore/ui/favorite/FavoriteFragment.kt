@@ -78,13 +78,18 @@ class FavoriteFragment : BaseFragment(), OnQueryTextListener {
     private fun showSuccess(data: List<Team>?) {
         showLoading(false)
         data?.run {
-            val adapter = FavoriteAdapter(this) { teamId, key -> saveFavoriteTeamOnClick(teamId, key) }
+            val adapter = FavoriteAdapter(this,{ teamId -> saveFavoriteTeamOnClick(teamId)},
+                { teamId -> removeFavoriteTeamOnClick(teamId)})
             recyclerFavorites.layoutManager = LinearLayoutManager(context)
             recyclerFavorites.adapter = adapter
         }
     }
 
-    private fun saveFavoriteTeamOnClick(teamId: String, key: String) {
-        viewModel.saveFavoriteTeam(teamId, key)
+    private fun saveFavoriteTeamOnClick(teamId: String) {
+        viewModel.saveFavoriteTeam(teamId)
+    }
+
+    private fun removeFavoriteTeamOnClick(teamId: String) {
+        viewModel.removeFavoriteTeam(teamId)
     }
 }

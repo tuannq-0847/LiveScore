@@ -5,7 +5,8 @@ import io.reactivex.Single
 
 class TeamDataSource {
     interface Local {
-        fun saveFavoriteTeam(teamId: String, key: String)
+        fun removeFavoriteTeam(teamId: String)
+        fun saveFavoriteTeam(teamId: String)
         fun getTeams(): Single<List<Team>>
         fun queryTeams(query: String?): Single<List<Team>>
     }
