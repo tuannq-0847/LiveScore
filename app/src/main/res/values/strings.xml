@@ -11,4 +11,8 @@
     <string name="titlePts">PTS</string>
     <string name="feature">FT</string>
     <string name="successfully">Successfully</string>
+    <string name="new_match">New match!!!</string>
+    <string name="description">notification</string>
+    <string name="name_notification">notification</string>
+    <string name="content_new_match">new match is coming</string>
 </resources>

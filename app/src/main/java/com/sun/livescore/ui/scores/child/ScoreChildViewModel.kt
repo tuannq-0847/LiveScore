@@ -2,12 +2,13 @@ package com.sun.livescore.ui.scores.child
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.sun.livescore.data.model.league.LeagueResponse
+import com.sun.livescore.data.model.league.League
 import com.sun.livescore.data.model.score.fixture.Fixture
 import com.sun.livescore.data.model.score.fixture.FixtureResponse
 import com.sun.livescore.data.model.score.history.History
 import com.sun.livescore.data.model.score.history.HistoryResponse
 import com.sun.livescore.data.remote.response.ApiResponse
+import com.sun.livescore.data.repository.LeagueLocalRepository
 import com.sun.livescore.data.repository.LeagueRepository
 import com.sun.livescore.data.repository.ScoreRepository
 import com.sun.livescore.ui.base.BaseViewModel
@@ -19,7 +20,10 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class ScoreChildViewModel(private val repository: ScoreRepository, private val leagueRepository: LeagueRepository) :
+class ScoreChildViewModel(
+    private val repository: ScoreRepository, private val leagueRepository: LeagueRepository,
+    private val leagueLocalRepository: LeagueLocalRepository
+) :
     BaseViewModel() {
 
     private val _scoreFixtureLiveData = MutableLiveData<ApiResponse<List<Fixture>>>()
@@ -44,8 +48,8 @@ class ScoreChildViewModel(private val repository: ScoreRepository, private val l
     private fun getScoreFixtures(finalDate: String) {
         compositeDisposable.add(
             Single.zip(repository.getScoresFixtures(finalDate),
-                leagueRepository.getAllLeagues(),
-                BiFunction<FixtureResponse, LeagueResponse, List<Fixture>> { t1, t2 ->
+                leagueLocalRepository.getLocalLeagues(),
+                BiFunction<FixtureResponse, List<League>, List<Fixture>> { t1, t2 ->
                     return@BiFunction getNameFixtureLeague(t1, t2)
                 })
                 .subscribeOn(Schedulers.io())
@@ -67,8 +71,8 @@ class ScoreChildViewModel(private val repository: ScoreRepository, private val l
     private fun getScoreHistories(finalDate: String) {
         compositeDisposable.add(
             Single.zip(repository.getScoresHistory(finalDate, finalDate),
-                leagueRepository.getAllLeagues(),
-                BiFunction<HistoryResponse, LeagueResponse, List<History>> { t1, t2 ->
+                leagueLocalRepository.getLocalLeagues(),
+                BiFunction<HistoryResponse, List<League>, List<History>> { t1, t2 ->
                     return@BiFunction getNameHistoryLeague(t1, t2)
                 })
                 .subscribeOn(Schedulers.io())
@@ -89,13 +93,12 @@ class ScoreChildViewModel(private val repository: ScoreRepository, private val l
 
     private fun getNameHistoryLeague(
         historyResponse: HistoryResponse,
-        leagueResponse: LeagueResponse
+        leagues: List<League>
     ): List<History> {
         val histories = historyResponse.data?.histories
-        val leagues = leagueResponse.data?.leagues
         histories?.forEach {
-            leagues?.first { league -> league.id == it.leagueId }.apply {
-                it.leagueName = this?.name
+            leagues.first { league -> league.id == it.leagueId }.apply {
+                it.leagueName = this.name
             }
         }
         return histories!!
@@ -103,13 +106,12 @@ class ScoreChildViewModel(private val repository: ScoreRepository, private val l
 
     private fun getNameFixtureLeague(
         fixtureResponse: FixtureResponse,
-        leagueResponse: LeagueResponse
+        leagues: List<League>
     ): List<Fixture> {
         val fixtures = fixtureResponse.data?.fixtures
-        val leagues = leagueResponse.data?.leagues
         fixtures?.forEach {
-            leagues?.first { league -> league.id == it.leagueId }.apply {
-                it.leagueName = this?.name
+            leagues.first { league -> league.id == it.leagueId }.apply {
+                it.leagueName = this.name
             }
         }
         return fixtures!!

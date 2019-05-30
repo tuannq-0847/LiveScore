@@ -9,6 +9,7 @@ import com.sun.livescore.data.model.EnumStatus.LOADING
 import com.sun.livescore.data.model.EnumStatus.SUCCESS
 import com.sun.livescore.data.model.score.history.History
 import com.sun.livescore.ui.base.BaseFragment
+import com.sun.livescore.ui.live_event.LiveEventFragment
 import com.sun.livescore.util.ContextExtension.showMessage
 import kotlinx.android.synthetic.main.fragment_scores_child.imageEmptyChild
 import kotlinx.android.synthetic.main.fragment_scores_child.progressLoading
@@ -45,10 +46,20 @@ class LiveScoreFragment : BaseFragment() {
 
     private fun loadDataToView(data: List<History>?) {
         data?.let {
-
-            val adapter = LiveScoreAdapter(it)
+            val adapter = LiveScoreAdapter(it) { history -> onMatchClick(history) }
             recyclerScores.adapter = adapter
             recyclerScores.layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    private fun onMatchClick(history: History) {
+        val liveEventFragment = LiveEventFragment.newInstance(history)
+        activity?.run {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.layoutParent, liveEventFragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 

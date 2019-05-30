@@ -12,10 +12,14 @@ import com.sun.livescore.ui.base.BaseViewHolder
 import com.sun.livescore.ui.scores.child.ScoreHistoryAdapter.HistoryViewHolder
 import com.sun.livescore.util.Constant
 import com.sun.livescore.util.Util
+import kotlinx.android.synthetic.main.item_match_score.view.textHomeName
 import kotlinx.android.synthetic.main.item_match_score.view.textNameLeague
 import kotlinx.android.synthetic.main.item_match_score.view.viewOnline
 
-class LiveScoreAdapter(private val histories: List<History>) :
+class LiveScoreAdapter(
+    private val histories: List<History>,
+    private val onMatchClick: (history: History) -> Unit
+) :
     BaseRecyclerAdapter<ItemMatchScoreBinding, History, HistoryViewHolder>(histories) {
 
     override fun onCreateViewHolder(
@@ -43,7 +47,10 @@ class LiveScoreAdapter(private val histories: List<History>) :
                 val scores = Util.getScoreFromString(data.score)
                 scoreHomeTeam = scores[Constant.FIRST_SCORE_INDEX]
                 scoreAwayTeam = scores[Constant.SECOND_SCORE_INDEX]
-                itemView.textNameLeague.visibility= if (checkSameLeague(position)) View.GONE else View.VISIBLE
+                itemView.textNameLeague.visibility = if (checkSameLeague(position)) View.GONE else View.VISIBLE
+                itemView.textHomeName.setOnClickListener {
+                    onMatchClick(data)
+                }
             }
         }
 

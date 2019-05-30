@@ -39,6 +39,7 @@ class ScoreFragment : BaseFragment(), OnTabSelectedListener {
         }
         viewPagerScores.adapter = pagerAdapter
         setUpTabLayout(pagerAdapter)
+        viewPagerScores.currentItem = INDEX_CURRENT_TIME
     }
 
     private fun setUpTabLayout(pagerAdapter: ScoreFragmentPagerAdapter?) {
@@ -65,5 +66,9 @@ class ScoreFragment : BaseFragment(), OnTabSelectedListener {
         positionTab?.let {
             model?.setDate(dates[it].date)
         }
+    }
+
+    companion object {
+        const val INDEX_CURRENT_TIME = 3
     }
 }
